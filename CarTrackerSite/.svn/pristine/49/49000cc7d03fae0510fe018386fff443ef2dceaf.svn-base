@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BusinessLogic.Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="BaseUser" Abstract="true">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+    <Property Name="Email" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+    <Property Name="Password" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+    <Property Name="Disabled" Nullable="false" Type="Boolean" />
+    <Property Name="CreateDate" Nullable="false" Precision="3" Type="DateTime" />
+    <Property Name="FirstName" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+    <Property Name="LastName" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+    <NavigationProperty Name="Cars" Relationship="BusinessLogic.Models.FK_Car_User" FromRole="BaseUser" ToRole="Car" />
+    <Property Name="CompanyId" Type="Int32" />
+    <NavigationProperty Name="Company" Relationship="BusinessLogic.Models.FK_User_Company" FromRole="BaseUser" ToRole="Company" />
+  </EntityType>
+  <EntityType Name="UserOrder">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Nullable="false" Type="Int32" />
+    <NavigationProperty Name="User" Relationship="BusinessLogic.Models.UserUserOrder" FromRole="UserOrder" ToRole="User" />
+  </EntityType>
+  <EntityContainer Name="DataContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Users" EntityType="BusinessLogic.Models.BaseUser" />
+    <EntitySet Name="UserOrders" EntityType="Self.UserOrder" />
+    <AssociationSet Name="UserUserOrder" Association="BusinessLogic.Models.UserUserOrder">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserOrder" EntitySet="UserOrders" />
+    </AssociationSet>
+    <EntitySet Name="Cars" EntityType="BusinessLogic.Models.Car" />
+    <EntitySet Name="Locations" EntityType="BusinessLogic.Models.Location" />
+    <AssociationSet Name="FK_Car_User" Association="BusinessLogic.Models.FK_Car_User">
+      <End EntitySet="Users" Role="BaseUser" />
+      <End EntitySet="Cars" Role="Car" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Location_Car" Association="BusinessLogic.Models.FK_Location_Car">
+      <End Role="Car" EntitySet="Cars" />
+      <End Role="Location" EntitySet="Locations" />
+    </AssociationSet>
+    <EntitySet Name="Companies" EntityType="BusinessLogic.Models.Company" />
+    <AssociationSet Name="FK_User_Company" Association="BusinessLogic.Models.FK_User_Company">
+      <End EntitySet="Companies" Role="Company" />
+      <End EntitySet="Users" Role="BaseUser" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="User" BaseType="BusinessLogic.Models.BaseUser">
+    <Property Name="Role" Type="BusinessLogic.Models.UserRoles" Nullable="false" />
+    <NavigationProperty Name="UserOrders" Relationship="BusinessLogic.Models.UserUserOrder" FromRole="User" ToRole="UserOrder" />
+  </EntityType>
+  <EntityType Name="Admin" BaseType="BusinessLogic.Models.BaseUser" />
+  <EnumType Name="UserRoles">
+    <Member Name="Member" Value="1" />
+    <Member Name="Manager" Value="2" />
+    <Member Name="Supervisor" Value="3" />
+  </EnumType>
+  <Association Name="UserUserOrder">
+    <End Type="BusinessLogic.Models.User" Role="User" Multiplicity="1" />
+    <End Type="BusinessLogic.Models.UserOrder" Role="UserOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserOrder">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Car">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CarManufacurer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CarModel" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="BusinessLogic.Models.FK_Car_User" FromRole="Car" ToRole="BaseUser" />
+    <NavigationProperty Name="Locations" Relationship="BusinessLogic.Models.FK_Location_Car" FromRole="Car" ToRole="Location" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Longitude" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
+    <Property Name="Latitude" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
+    <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Altitude" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="Accuracy" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="CarId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Car" Relationship="BusinessLogic.Models.FK_Location_Car" FromRole="Location" ToRole="Car" />
+    <Property Name="Speed" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+  </EntityType>
+  <Association Name="FK_Car_User">
+    <End Type="BusinessLogic.Models.BaseUser" Multiplicity="1" Role="BaseUser" />
+    <End Type="BusinessLogic.Models.Car" Multiplicity="*" Role="Car" />
+    <ReferentialConstraint>
+      <Principal Role="BaseUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Car">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Location_Car">
+    <End Type="BusinessLogic.Models.Car" Role="Car" Multiplicity="1" />
+    <End Type="BusinessLogic.Models.Location" Role="Location" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Car">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Location">
+        <PropertyRef Name="CarId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="BusinessLogic.Models.FK_User_Company" FromRole="Company" ToRole="BaseUser" />
+  </EntityType>
+  <Association Name="FK_User_Company">
+    <End Type="BusinessLogic.Models.Company" Multiplicity="0..1" Role="Company" />
+    <End Type="BusinessLogic.Models.BaseUser" Multiplicity="*" Role="BaseUser" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BaseUser">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

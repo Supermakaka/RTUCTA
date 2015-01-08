@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7b5be67e98294f6a87568f0530a802a5" Name="Diagram1">
+        <EntityTypeShape EntityType="BusinessLogic.Models.Company" Width="1.5" PointX="7.25" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessLogic.Models.BaseUser" Width="1.5" PointX="3.125" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessLogic.Models.UserOrder" Width="1.5" PointX="7.25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessLogic.Models.User" Width="1.5" PointX="3.25" PointY="4.75" />
+        <InheritanceConnector EntityType="BusinessLogic.Models.User" />
+        <EntityTypeShape EntityType="BusinessLogic.Models.Admin" Width="1.5" PointX="0.625" PointY="4.125" />
+        <InheritanceConnector EntityType="BusinessLogic.Models.Admin" />
+        <AssociationConnector Association="BusinessLogic.Models.CompanyUser" />
+        <AssociationConnector Association="BusinessLogic.Models.UserUserOrder" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

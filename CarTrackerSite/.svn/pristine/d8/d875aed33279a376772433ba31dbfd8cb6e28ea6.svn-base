@@ -1,0 +1,54 @@
+﻿@model WebSite.ViewModels.Auth.RegisterViewModel
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="page-header">
+    <h1>Create a New Account</h1>
+</div>
+
+<p>
+    Use the form below to create a new account.
+</p>
+<p>
+    Passwords are required to be a minimum of @Membership.MinRequiredPasswordLength characters in length.
+</p>
+
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginForm(null, null, FormMethod.Post))
+        {
+            @Html.ValidationSummary(false)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyId)
+                @Html.DropDownListFor(model => model.CompanyId, new SelectList(Model.Companies, "Id", "Name"), new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.FirstName)
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FirstName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.LastName)
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ConfirmPassword)
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            </div>
+
+            <button type="submit" class="btn btn-primary pull-right">Register</button>
+        }
+    </div>
+</div>

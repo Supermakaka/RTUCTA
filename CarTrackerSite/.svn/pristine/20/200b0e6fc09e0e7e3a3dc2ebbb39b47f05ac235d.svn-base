@@ -1,0 +1,48 @@
+﻿@model IEnumerable<WebSite.ViewModels.Locations.LocationViewModel>
+@{
+    ViewBag.Title = "Map";
+}
+<script src="http://www.mapquestapi.com/sdk/js/v7.2.s/mqa.toolkit.js?key=Fmjtd%7Cluurnuuynl%2Cbn%3Do5-9wrauy"></script>
+
+<h2>Map</h2>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div id="map"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    MQA.EventUtil.observe(window, 'load', function () {
+        var options = {
+            elt: document.getElementById('map'),            // ID of map element on page
+            zoom: 7,                                        // initial zoom level of the map
+            latLng: { lat: 39.743943, lng: -105.020089 }    // center of map in latitude/longitude
+        };
+
+        // construct an instance of MQA.TileMap with the options object
+        window.map = new MQA.TileMap(options);
+
+        // download the modules
+        MQA.withModule('new-route', 'smallzoom', 'mousewheel', function () {
+
+            // uses the MQA.TileMap.addRoute function to pass in an array
+            // of locations as part of the request parameter
+            map.addRoute({
+                request: {
+                    locations: [ @foreach (var locationPoint in Model)
+                        {
+                            @Html.Raw(" { latLng: { lat: " + locationPoint.Latitude + ", lng: " + locationPoint.Longitude + " } },")
+                        }   
+                    ]
+                }
+            });
+
+            map.addControl(new MQA.SmallZoom());
+            map.enableMouseWheelZoom();
+        });
+    });
+
+</script>
+

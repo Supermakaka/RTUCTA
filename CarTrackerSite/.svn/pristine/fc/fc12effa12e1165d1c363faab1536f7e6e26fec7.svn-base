@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-3.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-3.0 MvcSiteMapSchema.xsd"
+            enableLocalization="true">
+
+<mvcSiteMapNode title="Home" controller="Home" action="Index">
+  <mvcSiteMapNode title="Register" controller="Auth" action="Register" visibility="!Auth" />
+  <mvcSiteMapNode title="Account" controller="User" action="Account" visibility="Member,Manager,Supervisor" />
+    <mvcSiteMapNode title="Users" controller="Admin" action="UserList" visibility="Admin">
+      <mvcSiteMapNode title="User List" controller="Admin" action="UserList" />
+      <mvcSiteMapNode title="Edit User" controller="Admin" action="EditUser" hide-in-menu="true" />
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Orders" controller="Admin" action="OrderList" visibility="Admin">
+        <mvcSiteMapNode title="Order List" controller="Admin" action="OrderList" />
+        <mvcSiteMapNode title="Edit Order" controller="Admin" action="EditOrder" hide-in-menu="true" />
+        <mvcSiteMapNode title="Create Order" controller="Admin" action="CreateOrder" hide-in-menu="true" />
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Companies" controller="Admin" action="CompanyList" visibility="Admin">
+      <mvcSiteMapNode title="Company List" controller="Admin" action="CompanyList" />
+    </mvcSiteMapNode>
+  <mvcSiteMapNode title="About" controller="Home" action="About"/>    
+</mvcSiteMapNode>
+</mvcSiteMap>

@@ -1,0 +1,63 @@
+﻿@model MvcSiteMapProvider.Web.Html.Models.MenuHelperModel
+@using System.Web.Mvc.Html
+@using MvcSiteMapProvider.Web.Html.Models
+@{
+    string liClassBuilder = "";
+}
+
+@foreach (var node in Model.Nodes)
+{
+    if (node.MetaAttributes.Keys.Contains("hide-in-menu") && node.MetaAttributes["hide-in-menu"] == "true")
+    {
+        continue;
+    }
+
+    if (node.IsCurrentNode || node.Children.Any(n => n.IsInCurrentPath))
+    {
+        liClassBuilder = "active";
+    }
+
+    if (node.Children.Any(n => !(n.MetaAttributes.Keys.Contains("hide-in-menu") && n.MetaAttributes["hide-in-menu"] == "true")))
+    {
+        liClassBuilder += " dropdown";
+    }
+        
+    <li class="@liClassBuilder">
+        @if (node.Children.Any(n => !(n.MetaAttributes.Keys.Contains("hide-in-menu") && n.MetaAttributes["hide-in-menu"] == "true")))
+        {
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">@node.Title <span class="caret"></span></a>
+            @DropDownMenu(node.Children)
+        }
+        else
+        {
+            string url = node.IsClickable ? node.Url : "#";
+            
+            <a href="@url">@node.Title</a>
+        }
+    </li>
+    
+    @(liClassBuilder = "")
+}
+
+@helper DropDownMenu(SiteMapNodeModelList nodeList)
+{
+    <ul class="dropdown-menu" role="menu">
+        @foreach (var node in nodeList)
+        {
+            if (node.Title == "Separator")
+            {
+                <li class="divider"></li>
+                continue;
+            }
+
+            if (node.MetaAttributes.Keys.Contains("hide-in-menu") && node.MetaAttributes["hide-in-menu"] == "true")
+            {
+                continue;
+            }
+
+            string url = node.IsClickable ? node.Url : "#";
+
+            <li><a href="@url">@node.Title</a></li>
+        }
+    </ul>
+}

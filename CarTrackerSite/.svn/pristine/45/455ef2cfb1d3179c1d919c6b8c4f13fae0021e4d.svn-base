@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using WebSite.ViewModels.Locations;
+using BusinessLogic.Models;
+using BusinessLogic.Infrastructure;
+using BusinessLogic.Services;
+using AutoMapper;
+
+namespace WebSite.Controllers
+{
+    public class LocationController : BaseController
+    {
+
+        private ILocationService locationService;
+
+        public LocationController(ILocationService locationService) 
+        {
+            this.locationService = locationService;
+        }
+
+        public ActionResult Map()
+        {
+            LocationViewModel location = new LocationViewModel();
+
+            var carLocations = locationService.GetCarLocations(1);
+
+            var carList = Mapper.Map<IEnumerable<Location>, IEnumerable<LocationViewModel>>(carLocations);
+
+            return View(carList);
+        }
+
+        [HttpPost]
+        public ActionResult Map(int str) 
+        {
+            return View();
+        }
+	}
+}

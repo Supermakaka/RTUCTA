@@ -1,0 +1,147 @@
+﻿@model PagedList.PagedList<WebSite.ViewModels.Shared.CompanyListViewModel>
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "CompanyList";
+}
+
+<div class="page-header page-header-with-actions">
+    <h1 class="pull-left">Companies</h1>
+    <div class="actions pull-right">
+        <button type="button" class="btn btn-primary" id="btn-company-create"><i class="glyphicon glyphicon-plus"></i> New company</button>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>@Html.LabelFor(m => m.FirstOrDefault().Id)</th>
+            <th width="80%">@Html.LabelFor(m => m.FirstOrDefault().Name)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var company in Model)
+        {
+            <tr>
+                <td>@company.Id</td>
+                <td>@company.Name</td>
+                <td>
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" id="btn-company-edit" data-id="@company.Id" title="Edit"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
+                        <a class="btn btn-default btn-sm" id="btn-company-delete-view" data-company-id="@company.Id" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+@Html.PagedListPager(Model, page => Url.Action("CompanyList", new { page = page }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+
+<script type="text/javascript">
+    $(document).on('click', '#btn-company-create', function () {
+        $.ajax({
+            url: '/Admin/CreateCompany',
+            type: 'GET',
+            success: function (data) {
+                $('#modal .modal-content').html(data);
+                $('#modal').modal('show');
+
+                $('form').validateBootstrap();
+            }
+        });
+    });
+
+    $(document).on('click', '#btn-company-submit', function () {
+        var self = $(this);
+        $.ajax({
+            url: '/Admin/CreateCompany',
+            type: 'POST',
+            data: self.closest('form').serialize(),
+            success: function (data) {
+                if (data.success == true) {
+                    $('#modal').modal('hide');
+                    location.reload();
+                } else {
+                    $('#modal .modal-content').html(data);
+
+                    $('form').validateBootstrap();
+                }
+            }
+        });
+    });
+
+    $(document).on('click', '#btn-company-edit', function () {
+        var companyId = $(this).attr('data-id');
+        $.ajax({
+            url: '/Admin/EditCompany',
+            type: 'GET',
+            data: { id: companyId },
+            success: function (data) {
+                $('#modal .modal-content').html(data);
+                $('#modal').modal('show');
+
+                $('form').validateBootstrap();
+            }
+        });
+    });
+
+    $(document).on('click', '#btn-company-edit-submit', function () {
+        var self = $(this);
+        $.ajax({
+            url: '/Admin/EditCompany',
+            type: 'POST',
+            data: self.closest('form').serialize(),
+            success: function (data) {
+                if (data.success == true) {
+                    $('#modal').modal('hide');
+                    location.reload();
+                } else {
+                    $('#modal .modal-content').html(data);
+
+                    $('form').validateBootstrap();
+                }
+            }
+        });
+    });
+
+    $(document).on('click', '#btn-company-delete-view', function () {
+        var companyId = $(this).attr('data-company-id');
+        $.ajax({
+            url: '/Admin/DeleteCompany',
+            type: 'GET',
+            data: { id: companyId },
+            success: function (data) {
+                $('#modal .modal-content').html(data);
+                $('#modal').modal('show');
+            }
+        });
+    });
+
+    $(document).on('click', '#btn-company-delete', function () {
+        var companyId = $(this).attr('data-company-id-to-delete');
+        $.ajax({
+            url: '/Admin/DeleteCompanyById',
+            type: 'POST',
+            data: { id: companyId },
+            success: function (data) {
+                if (data.success == true) {
+                    $('#modal').modal('hide');
+                    location.reload();
+                } else {
+                    alert(data.alertmessage);
+                    location.reload();
+                }
+            }
+        });
+    });
+
+</script>

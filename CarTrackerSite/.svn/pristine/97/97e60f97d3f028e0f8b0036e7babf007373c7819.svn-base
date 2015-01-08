@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Map";
+}
+
+<script src="http://www.mapquestapi.com/sdk/leaflet/v1.s/mq-map.js?key=Fmjtd%7Cluurnuuynl%2Cbn%3Do5-9wrauy"></script>
+<script src="http://www.mapquestapi.com/sdk/leaflet/v1.s/mq-routing.js?key=Fmjtd%7Cluurnuuynl%2Cbn%3Do5-9wrauy"></script>
+
+<h2>Map</h2>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div id="map"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    window.onload = function () {
+        var map, dir;
+
+        map = L.map('map', {
+            layers: MQ.mapLayer(),
+            center: [38.895345, -77.030101],
+            zoom: 15
+        });
+
+        dir = MQ.routing.directions();
+
+        dir.route({
+            locations: [
+                '1600 pennsylvania ave, washington dc',
+                '935 pennsylvania ave, washington dc'
+            ]
+        });
+
+        map.addLayer(MQ.routing.routeLayer({
+            directions: dir,
+            fitBounds: true
+        }));
+    }
+
+</script>

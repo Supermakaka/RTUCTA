@@ -1,0 +1,4 @@
+repo dir:
+
+file:///C:/Users/Juris/Dropbox/SVN/BakalauraDarbs/trunk
+__________________________________________________________________________________

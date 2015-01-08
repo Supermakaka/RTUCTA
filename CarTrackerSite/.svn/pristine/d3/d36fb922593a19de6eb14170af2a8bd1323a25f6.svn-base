@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "Map";
+}
+
+<script src="http://www.mapquestapi.com/sdk/leaflet/v1.s/mq-map.js?key=Fmjtd%7Cluurnuuynl%2Cbn%3Do5-9wrauy"></script>
+<script src="http://www.mapquestapi.com/sdk/leaflet/v1.s/mq-routing.js?key=Fmjtd%7Cluurnuuynl%2Cbn%3Do5-9wrauy"></script>
+
+<h2>Map</h2>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div id="map"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    window.onload = function () {
+        var map, dir;
+
+        map = L.map('map', {
+            layers: MQ.mapLayer(),
+            center: [42.658694, -73.602323],
+            zoom: 7
+        });
+
+        dir = MQ.routing.directions();
+
+        dir.optimizedRoute({
+            locations: [
+                            { latLng: { lat: 55.890767, lng: 26.554824 } },
+                            { latLng: { lat: 55.890767, lng: 26.554824 } },
+                            { latLng: { lat: 55.891248, lng: 26.555167 } },
+                            { latLng: { lat: 55.890382, lng: 26.553687 } },
+                            { latLng: { lat: 55.889636, lng: 26.552442 } },
+                            { latLng: { lat: 55.888757, lng: 26.551241 } },
+                            { latLng: { lat: 55.887963, lng: 26.549910 } },
+                            { latLng: { lat: 55.886772, lng: 26.547807 } },
+                            { latLng: { lat: 55.885689, lng: 26.545941 } }
+            ]
+        });
+
+        map.addLayer(MQ.routing.routeLayer({
+            directions: dir,
+            fitBounds: true
+        }));
+    }
+
+</script>

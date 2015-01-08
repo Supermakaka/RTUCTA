@@ -1,0 +1,15 @@
+F:\Projects\Projekts\CarTrackerSite\BusinessLogicDatabaseFirst\bin\Release\BusinessLogic.dll.config
+F:\Projects\Projekts\CarTrackerSite\BusinessLogicDatabaseFirst\bin\Release\BusinessLogic.dll
+F:\Projects\Projekts\CarTrackerSite\BusinessLogicDatabaseFirst\bin\Release\BusinessLogic.pdb
+F:\Projects\Projekts\CarTrackerSite\BusinessLogicDatabaseFirst\bin\Release\BCrypt.Net.dll
+F:\Projects\Projekts\CarTrackerSite\BusinessLogicDatabaseFirst\bin\Release\EntityFramework.dll
+F:\Projects\Projekts\CarTrackerSite\BusinessLogicDatabaseFirst\bin\Release\EntityFramework.SqlServer.dll
+F:\Projects\Projekts\CarTrackerSite\BusinessLogicDatabaseFirst\bin\Release\Ninject.dll
+F:\Projects\Projekts\CarTrackerSite\BusinessLogicDatabaseFirst\bin\Release\BCrypt.Net.pdb
+F:\Projects\Projekts\CarTrackerSite\BusinessLogicDatabaseFirst\bin\Release\BCrypt.Net.xml
+F:\Projects\Projekts\CarTrackerSite\BusinessLogicDatabaseFirst\bin\Release\EntityFramework.xml
+F:\Projects\Projekts\CarTrackerSite\BusinessLogicDatabaseFirst\bin\Release\EntityFramework.SqlServer.xml
+F:\Projects\Projekts\CarTrackerSite\BusinessLogicDatabaseFirst\bin\Release\Ninject.xml
+F:\Projects\Projekts\CarTrackerSite\BusinessLogicDatabaseFirst\obj\Release\BusinessLogicDatabaseFirst.csprojResolveAssemblyReference.cache
+F:\Projects\Projekts\CarTrackerSite\BusinessLogicDatabaseFirst\obj\Release\BusinessLogic.dll
+F:\Projects\Projekts\CarTrackerSite\BusinessLogicDatabaseFirst\obj\Release\BusinessLogic.pdb

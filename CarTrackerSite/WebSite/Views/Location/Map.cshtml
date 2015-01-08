@@ -1,0 +1,144 @@
+﻿@model IEnumerable<WebSite.ViewModels.Locations.LocationViewModel>
+@{
+    ViewBag.Title = "Map";
+}
+<script src="http://www.mapquestapi.com/sdk/js/v7.2.s/mqa.toolkit.js?key=Fmjtd%7Cluurnuuynl%2Cbn%3Do5-9wrauy"></script>
+
+<h2>Map</h2>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div id="map"></div>
+    </div>
+</div>
+<form id="form">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="cornsilk-wrap">
+                <div class="row">
+                    <div class="col-md-10">
+                        <strong>Current Location</strong>
+                    </div>
+                    <div class="col-md-2">
+                        <input id="current-location" class="radio" value="current-location" name="map-check" type="radio" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <strong>Trace</strong><br />
+                    </div>
+                    <div class="col-md-2">
+                        <input id="trace" class="radio" value="trace" name="map-check" type="radio" />
+                    </div>
+                </div>
+            </div>
+            <div class="cornsilk-wrap">
+                <div class="row">
+                    <div class='col-sm-12'>
+                        <div class="form-group date-wrap">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <strong>From</strong>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class='input-group date' id='datetimepicker1'>
+                                        <input type='text' id="dateFrom" name="dateFrom" class="form-control" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <strong>To</strong>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class='input-group date' id='datetimepicker2'>
+                                        <input type='text' data-format="yyyy/MM/dd hh:mm:ss." id="dateTo" name="dateTo" class="form-control" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <button class="btn btn-lg id="trace-submit"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+
+    $(function () {
+        $('#datetimepicker1').datetimepicker();
+        $('#datetimepicker2').datetimepicker();
+    });
+
+    var locationArray = [ @foreach (var locationPoint in Model)
+                {
+                     @Html.Raw(" { latLng: { lat: " + locationPoint.Latitude + ", lng: " + locationPoint.Longitude + " } },")
+                }
+    ];
+
+    $("input:radio").on('change', function (e) {
+        if ($("input:radio:checked").val() == 'trace') {
+            $('.date-wrap').removeAttr('hidden');
+
+            locationArray = [ @foreach (var locationPoint in Model)
+                {
+                     @Html.Raw(" { latLng: { lat: " + locationPoint.Latitude + ", lng: " + locationPoint.Longitude + " } },")
+                }
+            ]
+        }
+        if ($("input:radio:checked").val() == 'current-location') {
+            $('.date-wrap').attr('hidden', true);
+
+            locationArray = [@Html.Raw(" { latLng: { lat: " + Model.LastOrDefault().Latitude + ", lng: " + Model.LastOrDefault().Longitude + " } }," )];
+        }
+    });
+
+    MQA.EventUtil.observe(window, 'load', function () {
+        var options = {
+            elt: document.getElementById('map'),            // ID of map element on page
+            zoom: 7,                                        // initial zoom level of the map
+            latLng: { lat: @Model.LastOrDefault().Latitude, lng: @Model.LastOrDefault().Longitude }    // center of map in latitude/longitude
+        };
+
+        // construct an instance of MQA.TileMap with the options object
+        window.map = new MQA.TileMap(options);
+
+        // download the modules
+        MQA.withModule('new-route', 'smallzoom', 'mousewheel', function () {
+
+            // uses the MQA.TileMap.addRoute function to pass in an array
+            // of locations as part of the request parameter
+            map.addRoute({
+                request: {
+                    locations: locationArray
+                }
+            });
+
+            map.addControl(new MQA.SmallZoom());
+            map.enableMouseWheelZoom();
+        });
+    });
+
+    $(document).on('click','#trace-submit', function(){
+
+        $.ajax({
+            url: '/Location/TraceDateInterval',
+            type: 'POST',
+            data: {dateFrom: $('#dateFrom').val(),
+                dateTo: $('#dateTo').val()},
+            success: function (data) {
+                if (data.success == true) {
+                } else {
+                }
+            }
+        });
+    });
+</script>
