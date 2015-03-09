@@ -6,8 +6,8 @@
 
 <mvcSiteMapNode title="Home" controller="Home" action="Index">
   <mvcSiteMapNode title="Register" controller="Auth" action="Register" visibility="!Auth" />
-  <mvcSiteMapNode title="Account" controller="User" action="Account" visibility="Member,Manager,Supervisor" />
-  <mvcSiteMapNode title="Map" controller="location" action="Map" visibility="Member,Manager,Supervisor" />
+  <mvcSiteMapNode title="Account" controller="User" action="Account" visibility="Auth" />
+  <mvcSiteMapNode title="Map" controller="location" action="Map" visibility="Auth" />
     <mvcSiteMapNode title="Users" controller="Admin" action="UserList" visibility="Admin">
       <mvcSiteMapNode title="User List" controller="Admin" action="UserList" />
       <mvcSiteMapNode title="Edit User" controller="Admin" action="EditUser" hide-in-menu="true" />

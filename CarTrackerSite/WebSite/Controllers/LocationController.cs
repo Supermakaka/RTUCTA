@@ -21,6 +21,16 @@ namespace WebSite.Controllers
             this.locationService = locationService;
         }
 
+        [HttpPost]
+        public ActionResult RetriveDataFromAndroid(LocationViewModel locationVM)
+        {
+            var location = Mapper.Map<LocationViewModel, Location>(locationVM);
+            
+            locationService.Add(location);
+
+            return Json(new { succes = true}, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Map()
         {
             LocationViewModel location = new LocationViewModel();
@@ -43,11 +53,26 @@ namespace WebSite.Controllers
         {
             LocationViewModel location = new LocationViewModel();
 
-            //var carLocations = locationService.GetCarLocationsByInterval(1, dateFrom, dateTo);
+            var from = DateTime.ParseExact(RecivedDataParser(dateFrom) , "MMddyyyyhhmmtt", System.Globalization.CultureInfo.InvariantCulture);
+            var to = DateTime.ParseExact(RecivedDataParser(dateTo), "MMddyyyyhhmmtt", System.Globalization.CultureInfo.InvariantCulture);
 
-            //var carLocationsList = Mapper.Map<IEnumerable<Location>, IEnumerable<LocationViewModel>>(carLocations);
+            var carLocations = locationService.GetCarLocationsByInterval(1, from, to);
 
-            return View();
+            var carLocationsList = Mapper.Map<IEnumerable<Location>, IEnumerable<LocationViewModel>>(carLocations);
+
+            return View(carLocationsList);
+        }
+
+        public String RecivedDataParser(String date)
+        {
+            string[] charsToRemove = new string[] { "/", ":", " " };
+
+            foreach (var character in charsToRemove)
+            {
+                date = date.Replace(character, string.Empty);
+            }
+
+            return date;
         }
 	}
 }

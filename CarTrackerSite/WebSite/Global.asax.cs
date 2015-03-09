@@ -8,6 +8,7 @@ using System.Web.Routing;
 using BusinessLogic;
 using System.Data.Entity;
 using WebSite.Core;
+using System.Web.Http;
 
 namespace WebSite
 {
@@ -56,7 +57,8 @@ namespace WebSite
             RegisterRoutes(RouteTable.Routes);
 
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            
+
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             //System.Data.Entity.Database.SetInitializer(new BusinessLogic.Infrastructure.DBInitializer());
         }
     }

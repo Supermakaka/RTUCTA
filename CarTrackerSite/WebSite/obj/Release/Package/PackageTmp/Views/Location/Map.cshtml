@@ -63,7 +63,7 @@
                                 </div>
                             </div>
                             <br />
-                            <button class="btn btn-lg id="trace-submit"></button>
+                            <button class="btn btn-lg" id="trace-submit"></button>
                         </div>
                     </div>
                 </div>
@@ -132,8 +132,11 @@
         $.ajax({
             url: '/Location/TraceDateInterval',
             type: 'POST',
-            data: {dateFrom: $('#dateFrom').val(),
-                dateTo: $('#dateTo').val()},
+            data: 
+            {
+                dateFrom: $('#dateFrom').val(),
+                dateTo: $('#dateTo').val()
+            },
             success: function (data) {
                 if (data.success == true) {
                 } else {

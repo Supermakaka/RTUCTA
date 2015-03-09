@@ -10,12 +10,21 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class GPSFragment extends Fragment implements LocationListener {
@@ -33,12 +42,16 @@ public class GPSFragment extends Fragment implements LocationListener {
     private String accuracy;
     private String altitude;
     private String time;
+    private String speed;
     private String provider;
     private TextView longitudeTextView;
     private TextView latitudeTextView;
     private TextView accuracyTextView;
     private TextView altitudeTextView;
     private TextView timeTextView;
+    private DateHelperClass dateHelperClass;
+
+    private HttpResponseHadlerActivity httpHandler;
 
     private LocationManager locationManager;
 
@@ -66,9 +79,11 @@ public class GPSFragment extends Fragment implements LocationListener {
 
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
+        dateHelperClass = new DateHelperClass();
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
 
+        httpHandler = new HttpResponseHadlerActivity();
 
         provider = locationManager.getBestProvider(criteria, true);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5, 5, this);
@@ -118,11 +133,30 @@ public class GPSFragment extends Fragment implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        longitudeTextView.setText(String.valueOf(location.getLongitude()));
-        latitudeTextView.setText(String.valueOf(location.getLatitude()));
-        accuracyTextView.setText(String.valueOf(location.getAccuracy()));
-        altitudeTextView.setText(String.valueOf(location.getAltitude()));
-        timeTextView.setText(String.valueOf(location.getTime()));
+        longitude = String.valueOf(location.getLongitude());
+        latitude = String.valueOf(location.getLatitude());
+        accuracy = String.valueOf(location.getAccuracy());
+        altitude = String.valueOf(location.getAltitude());
+        time = dateHelperClass.GetDate(location.getTime());
+        speed = String.valueOf(location.getSpeed());
+
+        longitudeTextView.setText(longitude);
+        latitudeTextView.setText(latitude);
+        accuracyTextView.setText(accuracy);
+        altitudeTextView.setText(altitude);
+        timeTextView.setText(time);
+
+                ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                nameValuePairs.add(new BasicNameValuePair("Longitude", longitude));
+                nameValuePairs.add(new BasicNameValuePair("Latitude", latitude));
+                nameValuePairs.add(new BasicNameValuePair("Time", time));
+                nameValuePairs.add(new BasicNameValuePair("Altitude", altitude));
+                nameValuePairs.add(new BasicNameValuePair("Accuracy", accuracy));
+                nameValuePairs.add(new BasicNameValuePair("CarId", "1"));
+                nameValuePairs.add(new BasicNameValuePair("Speed", speed));
+
+
+                httpHandler.makePostRequest("http://www.cartracker.somee.com/Location/RetriveDataFromAndroid", nameValuePairs);
     }
 
     @Override
