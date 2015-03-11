@@ -17,7 +17,7 @@ namespace WebSite
                         "~/Scripts/moment.js",
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/bootstrap.min.js",
-                        "~/Scripts/bootstrap-datetimepicker.min.js",
+                        "~/Scripts/jquery.datetimepicker.js",
                         "~/Scripts/leaflet.js",
                         "~/Scripts/leaflet-src.js",
                         "~/Scripts/bootstrap-alert.js",
@@ -29,7 +29,6 @@ namespace WebSite
             bundles.Add(new StyleBundle("~/bundles/main-styles")
                 .Include("~/Content/bootstrap.css", new CssRewriteUrlTransform())
                 .Include("~/Content/bootstrap-datetimepicker.css", new CssRewriteUrlTransform())
-                .Include("~/Content/bootstrap-datetimepicker.min.css", new CssRewriteUrlTransform())
                 .Include("~/Content/style.css", new CssRewriteUrlTransform())
                 .Include("~/Content/leaflet.css", new CssRewriteUrlTransform())
                 .Include("~/Content/leaflet-routing-machine.css", new CssRewriteUrlTransform())

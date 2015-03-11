@@ -1,133 +1,143 @@
 ﻿@model IEnumerable<WebSite.ViewModels.Locations.LocationViewModel>
-@{
-    ViewBag.Title = "Map";
-}
+    @{
+        ViewBag.Title = "Map";
+    }
 
-@{var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();}
+    @{var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();}
 
-<h2>Map</h2>
+    <h2>Map</h2>
 
-<div class="row">
-    <div class="col-lg-12">
-        <div id="map"></div>
-    </div>
-</div>
-<form id="form">
     <div class="row">
-        <div class="col-lg-3">
-            <div class="cornsilk-wrap">
-                <div class="row">
-                    <div class="col-md-10">
-                        <strong>Current Location</strong>
+        <div class="col-lg-12">
+            <div id="map"></div>
+        </div>
+    </div>
+    <form id="form">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="cornsilk-wrap">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <strong>Current Location</strong>
+                        </div>
+                        <div class="col-md-2">
+                            <input id="current-location" class="radio" value="current-location" name="map-check" type="radio" />
+                        </div>
                     </div>
-                    <div class="col-md-2">
-                        <input id="current-location" class="radio" value="current-location" name="map-check" type="radio" />
+                    <div class="row">
+                        <div class="col-md-10">
+                            <strong>Trace</strong><br />
+                        </div>
+                        <div class="col-md-2">
+                            <input id="trace" class="radio" value="trace" name="map-check" type="radio" />
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-10">
-                        <strong>Trace</strong><br />
-                    </div>
-                    <div class="col-md-2">
-                        <input id="trace" class="radio" value="trace" name="map-check" type="radio" />
-                    </div>
-                </div>
-            </div>
-            <div class="cornsilk-wrap">
-                <div class="row">
-                    <div class='col-sm-12'>
-                        <div class="form-group date-wrap">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <strong>From</strong>
-                                </div>
-                                <div class="col-md-10">
-                                    <div class='input-group date' id='datetimepicker1'>
-                                        <input type='text' id="dateFrom" name="dateFrom" class="form-control" />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
+                <div class="cornsilk-wrap">
+                    <div class="row">
+                        <div class='col-sm-12'>
+                            <div class="form-group date-wrap">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <strong>From</strong>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="input-group date" id="datetimepicker1">
+                                            <input type="text" id="dateFrom" name="dateFrom" class="form-control" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <strong>To</strong>
-                                </div>
-                                <div class="col-md-10">
-                                    <div class='input-group date' id='datetimepicker2'>
-                                        <input type='text' data-format="yyyy/MM/dd hh:mm:ss." id="dateTo" name="dateTo" class="form-control" />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <strong>To</strong>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="input-group date" id="datetimepicker2">
+                                            <input type="text" id="dateTo" name="dateTo" class="form-control" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
+                                <br />
+                                <button class="btn btn-lg" id="trace-submit" type="button"></button>
                             </div>
-                            <br />
-                            <button class="btn btn-lg" id="trace-submit"></button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</form>
-<script type="text/javascript">
+    </form>
+    <script type="text/javascript">
 
     $(function () {
-        $('#datetimepicker1').datetimepicker();
-        $('#datetimepicker2').datetimepicker();
-    });
+        jQuery('#dateFrom').datetimepicker();
+        jQuery('#dateTo').datetimepicker();
 
-    var locationArray = [ @foreach (var locationPoint in Model)
-                {
-                     @Html.Raw(" L.latLng(" + locationPoint.Latitude + ", " + locationPoint.Longitude + " ),")
-                }
-    ];
-
-    $("input:radio").on('change', function (e) {
-        if ($("input:radio:checked").val() == 'trace') {
-            $('.date-wrap').removeAttr('hidden');
-
-            locationArray = [ @foreach (var locationPoint in Model)
-                {
-                     @Html.Raw(" L.latLng(" + locationPoint.Latitude + ", " + locationPoint.Longitude + " ),")
-                }
-            ]
+            var locationArray = [ @foreach (var locationPoint in Model)
+        {
+             @Html.Raw(" L.latLng(" + locationPoint.Latitude + ", " + locationPoint.Longitude + " ),")
         }
-        if ($("input:radio:checked").val() == 'current-location') {
-            $('.date-wrap').attr('hidden', true);
+            ];
 
-            locationArray = [@Html.Raw(" L.latLng(" + Model.LastOrDefault().Latitude + ", " + Model.LastOrDefault().Longitude + " )," )];
-        }
-    });
+            $("input:radio").on('change', function (e) {
+                if ($("input:radio:checked").val() == 'trace') {
+                    $('.date-wrap').removeAttr('hidden');
 
-    var map = L.map('map');
-
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    L.Routing.control({
-        waypoints: locationArray,
-        routeWhileDragging: true
-    }).addTo(map);
-
-    $(document).on('click', '#trace-submit', function () {
-
-        $.ajax({
-            url: '/Location/TraceDateInterval',
-            type: 'POST',
-            data:
-            {
-                dateFrom: $('#dateFrom').val(),
-                dateTo: $('#dateTo').val()
-            },
-            success: function (data) {
-                if (data.success == true) {
-                } else {
-                }
+                    locationArray = [ @foreach (var locationPoint in Model)
+                {
+                         @Html.Raw(" L.latLng(" + locationPoint.Latitude + ", " + locationPoint.Longitude + " ),")
             }
+                    ]
+                }
+                if ($("input:radio:checked").val() == 'current-location') {
+                    $('.date-wrap').attr('hidden', true);
+
+                    locationArray = [@Html.Raw(" L.latLng(" + Model.LastOrDefault().Latitude + ", " + Model.LastOrDefault().Longitude + " )," )];
+                }
+            });
+
+            var map = L.map('map');
+
+            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            var routeControl =  L.Routing.control({
+                waypoints: locationArray
+            }).addTo(map);
+
+            $(document).on('click', '#trace-submit', function () {
+
+                //e.preventDefault();
+
+                $.ajax({
+                    url: '/Location/TraceDateInterval',
+                    type: 'POST',
+                    data:
+                    {
+                        dateFrom: $('#dateFrom').val(),
+                        dateTo: $('#dateTo').val()
+                    },
+                    success: function (data) {
+                        if (data.success == true) {
+                            locationArray = [];
+
+                            data.locations.forEach(function (item) {
+                                locationArray.push(L.latLng(item.Latitude, item.Longitude));
+                            });
+                            
+                            routeControl.setWaypoints(locationArray);
+
+                        } else {
+
+                        }
+                    }
+                });
+            });
         });
-    });
-</script>
+    </script>

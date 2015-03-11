@@ -49,30 +49,15 @@ namespace WebSite.Controllers
         }
 
         [HttpPost]
-        public ActionResult TraceDateInterval(String dateFrom, String dateTo)
+        public ActionResult TraceDateInterval(DateTime dateFrom, DateTime dateTo)
         {
             LocationViewModel location = new LocationViewModel();
 
-            var from = DateTime.ParseExact(RecivedDataParser(dateFrom) , "MMddyyyyhhmmtt", System.Globalization.CultureInfo.InvariantCulture);
-            var to = DateTime.ParseExact(RecivedDataParser(dateTo), "MMddyyyyhhmmtt", System.Globalization.CultureInfo.InvariantCulture);
-
-            var carLocations = locationService.GetCarLocationsByInterval(1, from, to);
+            var carLocations = locationService.GetCarLocationsByInterval(1, dateFrom, dateTo);
 
             var carLocationsList = Mapper.Map<IEnumerable<Location>, IEnumerable<LocationViewModel>>(carLocations);
 
-            return View(carLocationsList);
-        }
-
-        public String RecivedDataParser(String date)
-        {
-            string[] charsToRemove = new string[] { "/", ":", " " };
-
-            foreach (var character in charsToRemove)
-            {
-                date = date.Replace(character, string.Empty);
-            }
-
-            return date;
+            return Json(new { success = true, locations = carLocationsList }, JsonRequestBehavior.AllowGet);
         }
 	}
 }
