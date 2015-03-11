@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -133,6 +134,7 @@ public class GPSFragment extends Fragment implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
+
         longitude = String.valueOf(location.getLongitude());
         latitude = String.valueOf(location.getLatitude());
         accuracy = String.valueOf(location.getAccuracy());
@@ -146,17 +148,21 @@ public class GPSFragment extends Fragment implements LocationListener {
         altitudeTextView.setText(altitude);
         timeTextView.setText(time);
 
-                ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-                nameValuePairs.add(new BasicNameValuePair("Longitude", longitude));
-                nameValuePairs.add(new BasicNameValuePair("Latitude", latitude));
-                nameValuePairs.add(new BasicNameValuePair("Time", time));
-                nameValuePairs.add(new BasicNameValuePair("Altitude", altitude));
-                nameValuePairs.add(new BasicNameValuePair("Accuracy", accuracy));
-                nameValuePairs.add(new BasicNameValuePair("CarId", "1"));
-                nameValuePairs.add(new BasicNameValuePair("Speed", speed));
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.accumulate("Longitude", longitude);
+            jsonObject.accumulate("Latitude", latitude);
+            jsonObject.accumulate("Time", time);
+            jsonObject.accumulate("Altitude", altitude);
+            jsonObject.accumulate("Accuracy", accuracy);
+            jsonObject.accumulate("CarId", "1");
+            jsonObject.accumulate("Speed", speed);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
-
-                httpHandler.makePostRequest("http://www.cartracker.somee.com/Location/RetriveDataFromAndroid", nameValuePairs);
+        httpHandler.makePostRequest("http://supermakaka-001-site1.smarterasp.net/Location/RetriveDataFromAndroid", jsonObject.toString());
     }
 
     @Override

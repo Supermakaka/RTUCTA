@@ -21,7 +21,9 @@ namespace WebSite
                         "~/Scripts/leaflet.js",
                         "~/Scripts/leaflet-src.js",
                         "~/Scripts/bootstrap-alert.js",
-                        "~/Scripts/site.js"
+                        "~/Scripts/site.js",
+                        "~/Scripts/leaflet-routing-machine.js"
+            
                         ));
 
             bundles.Add(new StyleBundle("~/bundles/main-styles")
@@ -30,6 +32,7 @@ namespace WebSite
                 .Include("~/Content/bootstrap-datetimepicker.min.css", new CssRewriteUrlTransform())
                 .Include("~/Content/style.css", new CssRewriteUrlTransform())
                 .Include("~/Content/leaflet.css", new CssRewriteUrlTransform())
+                .Include("~/Content/leaflet-routing-machine.css", new CssRewriteUrlTransform())
             );
         }
     }

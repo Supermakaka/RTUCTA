@@ -13,14 +13,27 @@ namespace WebSite.ViewModels.Locations
 
     public class Mappings : IViewModelMapping
     {
-        #region ViewModel to DomainModel
 
-        public void Create(IConfiguration configuration) {
 
-            configuration.CreateMap<Location, LocationViewModel>();
+        public void Create(IConfiguration configuration)
+        {
+            #region ViewModel to DomainModel
+            configuration.CreateMap<LocationViewModel, Location>()
+                .IgnoreAllNonExisting();
+        
+        
+            #endregion
 
+            #region DomainModel to ViewModel
+
+            configuration.CreateMap<Location, LocationViewModel>()
+                .IgnoreAllNonExisting();
+
+            #endregion
         }
 
-        #endregion
+        
+
+ 
     }
 }
