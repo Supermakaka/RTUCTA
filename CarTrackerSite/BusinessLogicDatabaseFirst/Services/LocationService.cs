@@ -33,11 +33,18 @@ namespace BusinessLogic.Services
                    select locationContext;
         }
 
+        public Location GetCurrentLocation(int carId) 
+        {
+            return GetMany(l => l.CarId == carId).OrderByDescending(l => l.Time).FirstOrDefault();
+        }
+
+
     }
 
     public interface ILocationService : IService<Location>
     {
         IEnumerable<Location> GetCarLocations(int carId);
         IEnumerable<Location> GetCarLocationsByInterval(int carId, DateTime dateFrom, DateTime dateTo);
+        Location GetCurrentLocation(int carId);
     }
 }

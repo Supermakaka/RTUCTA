@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.Web.WebPages.Html;
 
 namespace WebSite.ViewModels.Locations
 {
@@ -31,5 +32,6 @@ namespace WebSite.ViewModels.Locations
 
         [Display(Name = "Car ID")]
         public int? CarId { get; set; }
+
     }
 }

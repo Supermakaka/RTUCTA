@@ -8,6 +8,8 @@ using BusinessLogic.Models;
 using BusinessLogic.Infrastructure;
 using BusinessLogic.Services;
 using AutoMapper;
+using WebSite.Core.Helpers;
+using WebSite.Core;
 
 namespace WebSite.Controllers
 {
@@ -15,35 +17,39 @@ namespace WebSite.Controllers
     {
 
         private ILocationService locationService;
+        private ICarService carService;
 
-        public LocationController(ILocationService locationService) 
+        public LocationController(ILocationService locationService, ICarService carService)
         {
             this.locationService = locationService;
+            this.carService = carService;
         }
 
         [HttpPost]
         public ActionResult RetriveDataFromAndroid(LocationViewModel locationVM)
         {
             var location = Mapper.Map<LocationViewModel, Location>(locationVM);
-            
+
             locationService.Add(location);
 
-            return Json(new { succes = true}, JsonRequestBehavior.AllowGet);
+            return Json(new { succes = true }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Map()
         {
-            LocationViewModel location = new LocationViewModel();
+            MapViewViewModel location = new MapViewViewModel();
 
             var carLocations = locationService.GetCarLocations(1);
 
-            var carList = Mapper.Map<IEnumerable<Location>, IEnumerable<LocationViewModel>>(carLocations);
+            location.LocationModel = Mapper.Map<IEnumerable<Location>, IEnumerable<LocationViewModel>>(carLocations);
 
-            return View(carList);
+            location.CarList = DropDownHelper.ConvertToSelectListItemIEnumerable(carService.GetUserCarsDropDown(HttpContextStorage.CurrentUser.Id));
+
+            return View(location);
         }
 
         [HttpPost]
-        public ActionResult Map(int str) 
+        public ActionResult Map(int str)
         {
             return View();
         }
@@ -59,5 +65,12 @@ namespace WebSite.Controllers
 
             return Json(new { success = true, locations = carLocationsList }, JsonRequestBehavior.AllowGet);
         }
-	}
+
+        public ActionResult CurrentLocationDate()
+        {
+            Location location = locationService.GetCurrentLocation(1);
+
+            return Json(new { success = true, longitude = location.Longitude, latitude = location.Latitude }, JsonRequestBehavior.AllowGet);
+        }
+    }
 }

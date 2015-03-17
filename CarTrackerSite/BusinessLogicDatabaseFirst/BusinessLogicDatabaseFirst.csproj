@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContext.cs" />
+    <Compile Include="Helpers\HelperModels\DropDownListModel.cs" />
     <Compile Include="Infrastructure\DependencyResolver.cs" />
     <Compile Include="InMemoryDataContext.cs" />
     <Compile Include="Models\Admin.cs">

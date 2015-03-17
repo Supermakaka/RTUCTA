@@ -1,4 +1,8 @@
-﻿@model IEnumerable<WebSite.ViewModels.Locations.LocationViewModel>
+﻿@model WebSite.ViewModels.Locations.MapViewViewModel
+    @*@model IEnumerable<WebSite.ViewModels.Locations.LocationViewModel>*@
+
+    @using WebSite.Core.Helpers
+
     @{
         ViewBag.Title = "Map";
     }
@@ -6,7 +10,30 @@
     @{var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();}
 
     <h2>Map</h2>
-
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        @Html.Label("Refresh interval")
+                        @Html.DropDownList("seconds", new SelectList(DropDownHelper.SecondsIntervarList(), "value", "text"), new { @id = "seconds-interval" })
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        @Html.Label("Select Car")
+                        @Html.DropDownList("seconds", new SelectList(DropDownHelper.SecondsIntervarList(), "value", "text"), new { @id = "seconds-interval" })
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        @Html.Label("Select Car")
+                        @Html.DropDownList("seconds", new SelectList(DropDownHelper.SecondsIntervarList(), "value", "text"), new { @id = "seconds-interval" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-lg-12">
             <div id="map"></div>
@@ -21,7 +48,7 @@
                             <strong>Current Location</strong>
                         </div>
                         <div class="col-md-2">
-                            <input id="current-location" class="radio" value="current-location" name="map-check" type="radio" />
+                            <input id="current-location" class="radio" value="current-location" name="map-check" type="radio" checked />
                         </div>
                     </div>
                     <div class="row">
@@ -64,7 +91,7 @@
                                     </div>
                                 </div>
                                 <br />
-                                <button class="btn btn-lg" id="trace-submit" type="button"></button>
+                                <button class="btn btn-sm" id="trace-submit" type="button" value="Submit">Submit</button>
                             </div>
                         </div>
                     </div>
@@ -74,31 +101,27 @@
     </form>
     <script type="text/javascript">
 
-    $(function () {
-        jQuery('#dateFrom').datetimepicker();
-        jQuery('#dateTo').datetimepicker();
+        $(function () {
 
-            var locationArray = [ @foreach (var locationPoint in Model)
-        {
-             @Html.Raw(" L.latLng(" + locationPoint.Latitude + ", " + locationPoint.Longitude + " ),")
-        }
+            jQuery('#dateFrom').datetimepicker();
+            jQuery('#dateTo').datetimepicker();
+
+            var timer;
+
+            setCurentLocation();
+
+            var locationArray = [ @foreach (var locationPoint in Model.LocationModel)
+            {
+                @Html.Raw(" L.latLng(" + locationPoint.Latitude + ", " + locationPoint.Longitude + " ),")
+            }
             ];
 
             $("input:radio").on('change', function (e) {
-                if ($("input:radio:checked").val() == 'trace') {
-                    $('.date-wrap').removeAttr('hidden');
+                if ($("input:radio:checked").val() == 'trace')
+                    setTrace();
 
-                    locationArray = [ @foreach (var locationPoint in Model)
-                {
-                         @Html.Raw(" L.latLng(" + locationPoint.Latitude + ", " + locationPoint.Longitude + " ),")
-            }
-                    ]
-                }
-                if ($("input:radio:checked").val() == 'current-location') {
-                    $('.date-wrap').attr('hidden', true);
-
-                    locationArray = [@Html.Raw(" L.latLng(" + Model.LastOrDefault().Latitude + ", " + Model.LastOrDefault().Longitude + " )," )];
-                }
+                if ($("input:radio:checked").val() == 'current-location')
+                    setCurentLocation();
             });
 
             var map = L.map('map');
@@ -107,14 +130,25 @@
                 attribution: '© OpenStreetMap contributors'
             }).addTo(map);
 
-            var routeControl =  L.Routing.control({
+            var routeControl = L.Routing.control({
                 waypoints: locationArray
             }).addTo(map);
 
             $(document).on('click', '#trace-submit', function () {
 
-                //e.preventDefault();
+                loadTraceDate();
 
+            });
+
+            $('#seconds-interval').on('change', function () {
+
+                clearInterval(timer);
+
+                setCurentLocation();
+
+            });
+
+            function loadTraceDate() {
                 $.ajax({
                     url: '/Location/TraceDateInterval',
                     type: 'POST',
@@ -130,7 +164,7 @@
                             data.locations.forEach(function (item) {
                                 locationArray.push(L.latLng(item.Latitude, item.Longitude));
                             });
-                            
+
                             routeControl.setWaypoints(locationArray);
 
                         } else {
@@ -138,6 +172,41 @@
                         }
                     }
                 });
-            });
+            }
+
+            function loadCurrentLocation() {
+                $.ajax({
+                    url: '/Location/CurrentLocationDate',
+                    type: 'GET',
+                    success: function (data) {
+                        if (data.success == true) {
+
+                            routeControl.setWaypoints(L.latLng(data.latitude, data.longitude));
+
+                        } else {
+
+                        }
+                    }
+                });
+            };
+
+            function setCurentLocation() {
+
+                $('.date-wrap').attr('hidden', true);
+
+                timer = setInterval(function () {
+                    loadCurrentLocation();
+                }, $('#seconds-interval').val());
+            }
+
+            function setTrace() {
+
+                clearInterval(timer);
+
+                $('.date-wrap').removeAttr('hidden');
+
+                loadTraceDate();
+            }
+
         });
     </script>

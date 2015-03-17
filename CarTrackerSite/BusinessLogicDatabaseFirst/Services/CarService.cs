@@ -1,4 +1,5 @@
-﻿using BusinessLogic.Models;
+﻿using BusinessLogic.Helpers.HelperModels;
+using BusinessLogic.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,19 @@ namespace BusinessLogic.Services
         {
 
         }
+
+        #region Public
+
+        public IEnumerable<DropDownListModel> GetUserCarsDropDown(int userId)
+        {
+            return base.GetMany(s => s.UserId == userId).Select(s => new DropDownListModel { Text = s.CarNumber, Value = s.Id.ToString()});
+        }
+
+        #endregion
     }
 
     public interface ICarService : IService<Car>
     {
-
+        IEnumerable<DropDownListModel> GetUserCarsDropDown(int userId);
     }
 }
