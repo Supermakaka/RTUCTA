@@ -15,7 +15,14 @@ namespace WebSite.ViewModels.Cars
     {   
         public void Create(IConfiguration configuration)
         {
-            configuration.CreateMap<Car, CarViewModel >();
+            #region From Domain Model to View Model
+
+            configuration.CreateMap<Car, CarViewModel>();
+
+            configuration.CreateMap<Car, CarsListViewModel>()
+                .ForMember(d => d.UserName, o => o.MapFrom(s => s.User.FirstName + s.User.LastName))
+                .ForMember(d => d.UserEmail, o => o.MapFrom(s => s.User.Email));
+            #endregion
         }
     }
 }

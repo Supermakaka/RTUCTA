@@ -22,14 +22,17 @@ namespace WebSite
                         "~/Scripts/leaflet-src.js",
                         "~/Scripts/bootstrap-alert.js",
                         "~/Scripts/site.js",
+                        "~/Scripts/DataTables-1.10.2/jquery.dataTables.js",
+                        "~/Scripts/DataTables-1.10.2/dataTables.overrides.js",
                         "~/Scripts/leaflet-routing-machine.js"
-            
+
                         ));
 
             bundles.Add(new StyleBundle("~/bundles/main-styles")
                 .Include("~/Content/bootstrap.css", new CssRewriteUrlTransform())
                 .Include("~/Content/bootstrap-datetimepicker.css", new CssRewriteUrlTransform())
                 .Include("~/Content/style.css", new CssRewriteUrlTransform())
+                .Include("~/Content/jquery.dataTables.custom.css", new CssRewriteUrlTransform())
                 .Include("~/Content/leaflet.css", new CssRewriteUrlTransform())
                 .Include("~/Content/leaflet-routing-machine.css", new CssRewriteUrlTransform())
             );

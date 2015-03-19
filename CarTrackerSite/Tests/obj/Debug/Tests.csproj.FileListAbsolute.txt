@@ -25,6 +25,7 @@ E:\Projects\Projekts\RTUCTA\CarTrackerSite\Tests\bin\Debug\System.Web.Optimizati
 E:\Projects\Projekts\RTUCTA\CarTrackerSite\Tests\bin\Debug\PagedList.dll
 E:\Projects\Projekts\RTUCTA\CarTrackerSite\Tests\bin\Debug\System.Web.Http.WebHost.dll
 E:\Projects\Projekts\RTUCTA\CarTrackerSite\Tests\bin\Debug\System.Net.Http.Formatting.dll
+E:\Projects\Projekts\RTUCTA\CarTrackerSite\Tests\bin\Debug\Newtonsoft.Json.dll
 E:\Projects\Projekts\RTUCTA\CarTrackerSite\Tests\bin\Debug\BusinessLogic.pdb
 E:\Projects\Projekts\RTUCTA\CarTrackerSite\Tests\bin\Debug\WebSite.pdb
 E:\Projects\Projekts\RTUCTA\CarTrackerSite\Tests\bin\Debug\Ninject.xml

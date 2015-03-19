@@ -12,3 +12,4 @@ E:\Projects\Projekts\RTUCTA\CarTrackerSite\BusinessLogicDatabaseFirst\bin\Debug\
 E:\Projects\Projekts\RTUCTA\CarTrackerSite\BusinessLogicDatabaseFirst\bin\Debug\Ninject.xml
 E:\Projects\Projekts\RTUCTA\CarTrackerSite\BusinessLogicDatabaseFirst\obj\Debug\BusinessLogic.dll
 E:\Projects\Projekts\RTUCTA\CarTrackerSite\BusinessLogicDatabaseFirst\obj\Debug\BusinessLogic.pdb
+E:\Projects\Projekts\RTUCTA\CarTrackerSite\BusinessLogicDatabaseFirst\obj\Debug\BusinessLogicDatabaseFirst.csprojResolveAssemblyReference.cache

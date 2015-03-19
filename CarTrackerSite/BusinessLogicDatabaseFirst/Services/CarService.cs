@@ -23,11 +23,17 @@ namespace BusinessLogic.Services
             return base.GetMany(s => s.UserId == userId).Select(s => new DropDownListModel { Text = s.CarNumber, Value = s.Id.ToString()});
         }
 
+        public IQueryable<Car> GetAll(int userId)
+        {
+            return base.GetMany(s => s.UserId == userId);
+        }
+
         #endregion
     }
 
     public interface ICarService : IService<Car>
     {
         IEnumerable<DropDownListModel> GetUserCarsDropDown(int userId);
+        IQueryable<Car> GetAll(int userId);
     }
 }

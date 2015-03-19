@@ -62,14 +62,14 @@ namespace BusinessLogic.Services
             return dbset.Find(id);
         }
 
-        public virtual IEnumerable<T> GetAll()
+        public virtual IQueryable<T> GetAll()
         {
-            return dbset.ToList();
+            return dbset;
         }
 
-        public virtual IEnumerable<T> GetMany(Expression<Func<T, bool>> where)
+        public virtual IQueryable<T> GetMany(Expression<Func<T, bool>> where)
         {
-            return dbset.Where(where).ToList();
+            return dbset.Where(where);
         }
 
         public T Get(Expression<Func<T, bool>> where)

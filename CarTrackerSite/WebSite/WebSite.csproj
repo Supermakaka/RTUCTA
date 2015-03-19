@@ -59,6 +59,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
+    <Reference Include="DataTables.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>_lib\DataTables.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="dotless.Core, Version=1.4.1.0, Culture=neutral, PublicKeyToken=96b446c9e63eae34, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\dotless.1.4.1.0\lib\dotless.Core.dll</HintPath>
@@ -104,6 +108,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Linq.Dynamic">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.4\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -172,12 +179,16 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CarsController.cs" />
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Core\ActionAttributes\AutoMap.cs" />
     <Compile Include="Core\CookieStorage.cs" />
     <Compile Include="Core\Helpers\DropDownHelper.cs" />
+    <Compile Include="Core\Helpers\DynamicFilter.cs" />
+    <Compile Include="Core\Helpers\FilteringParametersHelper.cs" />
+    <Compile Include="Core\Helpers\FilterTypeAtribute.cs" />
     <Compile Include="Core\HttpContextStorage.cs" />
     <Compile Include="Core\MvcSiteMap\VisibilityProvider.cs" />
     <Compile Include="Core\NinjectModules\AutoMapperModule.cs" />
@@ -191,6 +202,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Cars\CarsListViewModel.cs" />
     <Compile Include="ViewModels\Cars\CarViewModel.cs" />
     <Compile Include="ViewModels\Cars\Mappings.cs" />
     <Compile Include="ViewModels\Locations\LocationViewModel.cs" />
@@ -211,14 +223,99 @@
     <Compile Include="ViewModels\Shared\Mappings.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\animate\animate.css" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.autoFill.css" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.autoFill.min.css" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.bootstrap.css" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.colReorder.css" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.colReorder.min.css" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.colVis.css" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.colvis.jqueryui.css" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.colVis.min.css" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.fixedColumns.css" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.fixedColumns.min.css" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.fixedHeader.css" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.fixedHeader.min.css" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.foundation.css" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.jqueryui.css" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.keyTable.css" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.keyTable.min.css" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.responsive.css" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.scroller.css" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.scroller.min.css" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.tableTools.css" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.tableTools.min.css" />
+    <Content Include="Content\DataTables-1.10.2\css\jquery.dataTables.css" />
+    <Content Include="Content\DataTables-1.10.2\css\jquery.dataTables.min.css" />
+    <Content Include="Content\DataTables-1.10.2\css\jquery.dataTables_themeroller.css" />
+    <Content Include="Content\DataTables-1.10.2\images\background.png" />
+    <Content Include="Content\DataTables-1.10.2\images\back_disabled.png" />
+    <Content Include="Content\DataTables-1.10.2\images\back_enabled.png" />
+    <Content Include="Content\DataTables-1.10.2\images\back_enabled_hover.png" />
+    <Content Include="Content\DataTables-1.10.2\images\collection.png" />
+    <Content Include="Content\DataTables-1.10.2\images\collection_hover.png" />
+    <Content Include="Content\DataTables-1.10.2\images\copy.png" />
+    <Content Include="Content\DataTables-1.10.2\images\copy_hover.png" />
+    <Content Include="Content\DataTables-1.10.2\images\csv.png" />
+    <Content Include="Content\DataTables-1.10.2\images\csv_hover.png" />
+    <Content Include="Content\DataTables-1.10.2\images\filler.png" />
+    <Content Include="Content\DataTables-1.10.2\images\forward_disabled.png" />
+    <Content Include="Content\DataTables-1.10.2\images\forward_enabled.png" />
+    <Content Include="Content\DataTables-1.10.2\images\forward_enabled_hover.png" />
+    <Content Include="Content\DataTables-1.10.2\images\insert.png" />
+    <Content Include="Content\DataTables-1.10.2\images\loading-background.png" />
+    <Content Include="Content\DataTables-1.10.2\images\pdf.png" />
+    <Content Include="Content\DataTables-1.10.2\images\pdf_hover.png" />
+    <Content Include="Content\DataTables-1.10.2\images\print.png" />
+    <Content Include="Content\DataTables-1.10.2\images\print_hover.png" />
+    <Content Include="Content\DataTables-1.10.2\images\sort_asc.png" />
+    <Content Include="Content\DataTables-1.10.2\images\sort_asc_disabled.png" />
+    <Content Include="Content\DataTables-1.10.2\images\sort_both.png" />
+    <Content Include="Content\DataTables-1.10.2\images\sort_desc.png" />
+    <Content Include="Content\DataTables-1.10.2\images\sort_desc_disabled.png" />
+    <Content Include="Content\DataTables-1.10.2\images\xls.png" />
+    <Content Include="Content\DataTables-1.10.2\images\xls_hover.png" />
+    <Content Include="Content\DataTables-1.10.2\swf\copy_csv_xls.swf" />
+    <Content Include="Content\DataTables-1.10.2\swf\copy_csv_xls_pdf.swf" />
+    <Content Include="Content\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\leaflet-routing-machine.css" />
     <Content Include="Content\leaflet.routing.icons.png" />
+    <Content Include="Scripts\app\app.dataTables.js" />
+    <Content Include="Scripts\app\app.js" />
+    <Content Include="Scripts\app\app.mmenu.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\DataTables-1.10.2\dataTables.autoFill.js" />
+    <Content Include="Scripts\DataTables-1.10.2\dataTables.autoFill.min.js" />
+    <Content Include="Scripts\DataTables-1.10.2\dataTables.bootstrap.js" />
+    <Content Include="Scripts\DataTables-1.10.2\dataTables.colReorder.js" />
+    <Content Include="Scripts\DataTables-1.10.2\dataTables.colReorder.min.js" />
+    <Content Include="Scripts\DataTables-1.10.2\dataTables.colVis.js" />
+    <Content Include="Scripts\DataTables-1.10.2\dataTables.colVis.min.js" />
+    <Content Include="Scripts\DataTables-1.10.2\dataTables.fixedColumns.js" />
+    <Content Include="Scripts\DataTables-1.10.2\dataTables.fixedColumns.min.js" />
+    <Content Include="Scripts\DataTables-1.10.2\dataTables.fixedHeader.js" />
+    <Content Include="Scripts\DataTables-1.10.2\dataTables.fixedHeader.min.js" />
+    <Content Include="Scripts\DataTables-1.10.2\dataTables.foundation.js" />
+    <Content Include="Scripts\DataTables-1.10.2\dataTables.jqueryui.js" />
+    <Content Include="Scripts\DataTables-1.10.2\dataTables.keyTable.js" />
+    <Content Include="Scripts\DataTables-1.10.2\dataTables.keyTable.min.js" />
+    <Content Include="Scripts\DataTables-1.10.2\dataTables.overrides.js" />
+    <Content Include="Scripts\DataTables-1.10.2\dataTables.responsive.js" />
+    <Content Include="Scripts\DataTables-1.10.2\dataTables.responsive.min.js" />
+    <Content Include="Scripts\DataTables-1.10.2\dataTables.scroller.js" />
+    <Content Include="Scripts\DataTables-1.10.2\dataTables.scroller.min.js" />
+    <Content Include="Scripts\DataTables-1.10.2\dataTables.tableTools.js" />
+    <Content Include="Scripts\DataTables-1.10.2\dataTables.tableTools.min.js" />
+    <Content Include="Scripts\DataTables-1.10.2\jquery.dataTables.js" />
+    <Content Include="Scripts\DataTables-1.10.2\jquery.dataTables.min.js" />
+    <Content Include="Scripts\DataTables-1.10.2\jquery.dataTables.overrides.js" />
     <Content Include="Scripts\images\layers-2x.png" />
     <Content Include="Scripts\images\layers.png" />
     <Content Include="Scripts\images\marker-icon-2x.png" />
@@ -237,6 +334,19 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.jqueryui.scss" />
+    <Content Include="Content\DataTables-1.10.2\css\dataTables.responsive.scss" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Scripts\jquery.dataTables.custom.css" />
+    <Content Include="Scripts\noty\jquery.noty.packaged.min.js" />
+    <Content Include="Scripts\noty\themes\bootstrap.js" />
+    <Content Include="Scripts\noty\themes\custom.js" />
+    <Content Include="Scripts\noty\themes\default.js" />
+    <Content Include="Scripts\noty\themes\relax.js" />
+    <Content Include="_lib\DataTables.Mvc.dll" />
     <None Include="MvcSiteMapSchema.xsd" />
     <None Include="Properties\PublishProfiles\Cartrackapp.pubxml" />
     <None Include="Properties\PublishProfiles\sa.pubxml" />
@@ -305,7 +415,7 @@
     <Content Include="Views\Admin\DeleteCompany.cshtml" />
     <Content Include="Scripts\jquery.validate.unobtrusive.bootstrap.min.js.map" />
     <Content Include="Views\Location\Map.cshtml" />
-    <Content Include="Views\Car\CarList.cshtml" />
+    <Content Include="Views\Cars\CarList.cshtml" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -331,6 +441,9 @@
       <Project>{24eb990a-162d-411d-83a3-a380c2a7cd8e}</Project>
       <Name>BusinessLogicDatabaseFirst</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

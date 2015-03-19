@@ -15,7 +15,7 @@ namespace BusinessLogic.Services
         T GetById(long Id);
         T GetById(string Id);
         T Get(Expression<Func<T, bool>> where);
-        IEnumerable<T> GetAll();
-        IEnumerable<T> GetMany(Expression<Func<T, bool>> where);
+        IQueryable<T> GetAll();
+        IQueryable<T> GetMany(Expression<Func<T, bool>> where);
     }
 }
