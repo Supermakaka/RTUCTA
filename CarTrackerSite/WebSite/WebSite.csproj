@@ -220,6 +220,7 @@
     <Compile Include="ViewModels\Admin\Mappings.cs" />
     <Compile Include="ViewModels\Mappings\IViewModelMapping.cs" />
     <Compile Include="ViewModels\Shared\CreateEditCompanyViewModel.cs" />
+    <Compile Include="ViewModels\Shared\DeleteApproveViewModel.cs" />
     <Compile Include="ViewModels\Shared\Mappings.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -417,6 +418,10 @@
     <Content Include="Views\Location\Map.cshtml" />
     <Content Include="Views\Cars\CarList.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Cars\PartialViews\Modals\Create.cshtml" />
+    <Content Include="Views\Cars\PartialViews\Modals\Edit.cshtml" />
+    <Content Include="Views\Cars\PartialViews\Forms\Form.cshtml" />
+    <Content Include="Views\Shared\PartialViews\Modals\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

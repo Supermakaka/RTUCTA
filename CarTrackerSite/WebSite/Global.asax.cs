@@ -58,6 +58,8 @@ namespace WebSite
 
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+            ModelBinders.Binders.Add(typeof(DataTables.Mvc.IDataTablesRequest), new DataTables.Mvc.DataTablesBinder());
+
             GlobalConfiguration.Configure(WebApiConfig.Register);
             //System.Data.Entity.Database.SetInitializer(new BusinessLogic.Infrastructure.DBInitializer());
         }

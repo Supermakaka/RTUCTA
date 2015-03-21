@@ -1,0 +1,17 @@
+﻿@model WebSite.ViewModels.Cars.CarViewModel
+
+<form>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add New Car</h4>
+    </div>
+    <div class="modal-body">
+        @Html.Partial("/Views/Cars/PartialViews/Forms/Form.cshtml", Model)
+    </div>
+    <div class="modal-footer text-right">
+        <button type="button" class="btn btn-primary" id="btn-create-submit">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+    </div>
+</form>
+
+

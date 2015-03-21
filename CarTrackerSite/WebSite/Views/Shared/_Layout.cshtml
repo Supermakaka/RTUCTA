@@ -42,11 +42,16 @@
             @Html.MvcSiteMap().SiteMapPath()
 
             @RenderBody()
-            
             <hr />
             <div class="text-right">
                 Juris Kondrats 2015
             </div>
+        </div>
+        <div class="modal-wrap">
+            @if (IsSectionDefined("Modals"))
+            {
+                @RenderSection("Modals")
+            }
         </div>
     </body>
 </html>

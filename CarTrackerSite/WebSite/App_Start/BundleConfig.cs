@@ -35,6 +35,7 @@ namespace WebSite
                 .Include("~/Content/jquery.dataTables.custom.css", new CssRewriteUrlTransform())
                 .Include("~/Content/leaflet.css", new CssRewriteUrlTransform())
                 .Include("~/Content/leaflet-routing-machine.css", new CssRewriteUrlTransform())
+                .Include("~/Content/font-awesome/css/font-awesome.css", new CssRewriteUrlTransform())
             );
         }
     }
