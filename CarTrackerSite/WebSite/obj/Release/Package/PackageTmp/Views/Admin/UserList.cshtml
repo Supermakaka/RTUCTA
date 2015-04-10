@@ -1,0 +1,54 @@
+﻿@model PagedList.PagedList<WebSite.ViewModels.Admin.UserListViewModel>
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<div class="page-header">
+    <h1>Users</h1>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>@Html.LabelFor(m => m.FirstOrDefault().CompanyName)</th>
+      <th>@Html.LabelFor(m => m.FirstOrDefault().Email)</th>
+      <th>@Html.LabelFor(m => m.FirstOrDefault().FirstName)</th>
+      <th>@Html.LabelFor(m => m.FirstOrDefault().LastName)</th>
+      <th>@Html.LabelFor(m => m.FirstOrDefault().Role)</th>
+      <th>@Html.LabelFor(m => m.FirstOrDefault().Disabled)</th>
+      <th>@Html.LabelFor(m => m.FirstOrDefault().CreateDate)</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var user in Model)
+    {
+        Html.RenderPartial("UserListRow", user);
+    }
+  </tbody>
+</table>
+
+@Html.PagedListPager(Model, page => Url.Action("UserList", new { page = page }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+
+<script type="text/javascript">
+    $(document).on("click", ".btn-disable", function ()
+    {
+        var btn = $(this);
+
+        $.post(
+            '@Url.Action("DisableOrEnableUser", "Admin")',
+            { id: btn.attr("data-user-id") },
+            function (data)
+            {
+                btn.closest("tr").replaceWith(data);
+            }
+        );
+
+        return false;
+    });
+</script>
+    
+

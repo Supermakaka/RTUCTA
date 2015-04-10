@@ -20,3 +20,18 @@
     @Html.TextBoxFor(model => model.VINNumber, new { @class = "form-control" })
     @Html.ValidationMessageFor(model => model.VINNumber, "", new { @class = "text-danger" })
 </div>
+<div class="form-group">
+    @Html.LabelFor(model => model.FuelTankCapacity)
+    @Html.TextBoxFor(model => model.FuelTankCapacity, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.FuelTankCapacity, "", new { @class = "text-danger" })
+</div>
+<div class="form-group">
+    @Html.LabelFor(model => model.FuelConsumptionUrban)
+    @Html.TextBoxFor(model => model.FuelConsumptionUrban, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.FuelConsumptionUrban, "", new { @class = "text-danger" })
+</div>
+<div class="form-group">
+    @Html.LabelFor(model => model.FuelConsumptionExtraUrban)
+    @Html.TextBoxFor(model => model.FuelConsumptionExtraUrban, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.FuelConsumptionExtraUrban, "", new { @class = "text-danger" })
+</div>

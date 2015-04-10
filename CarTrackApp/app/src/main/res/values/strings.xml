@@ -17,5 +17,10 @@
     <string name="altitude">Altitude</string>
     <string name="time">Time</string>
     <string name="accuracy">Accuracy</string>
+    <string name="throtle">Throtle</string>
+    <string name="isturnedon">Car is turned on</string>
+    <string name="fuelconsumption">Fuel Consumption</string>
+    <string name="fueltank">Fuel Tank</string>
+    <string name="millage">Millage</string>
 
 </resources>

@@ -32,6 +32,20 @@ namespace WebSite.ViewModels.Locations
 
         [Display(Name = "Car ID")]
         public int? CarId { get; set; }
-
+        
+        [Display(Name = "Milage")]
+        public Nullable<decimal> Mileage { get; set; }
+        
+        [Display(Name = "Fuel Tank Capacity")]
+        public Nullable<decimal> FuelTank { get; set; }
+        
+        [Display(Name = "")]
+        public Nullable<decimal> IsTurnedOn { get; set; }
+        
+        [Display(Name = "Throtle")]
+        public Nullable<decimal> Throtle { get; set; }
+        
+        [Display(Name = "Fuel Consumption")]
+        public Nullable<decimal> FuelConsumption { get; set; }
     }
 }

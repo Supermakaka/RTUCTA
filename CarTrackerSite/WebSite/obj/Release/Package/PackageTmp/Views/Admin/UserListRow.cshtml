@@ -1,0 +1,27 @@
+﻿@model WebSite.ViewModels.Admin.UserListViewModel
+
+<tr>
+    <td>@Model.Id</td>
+    <td>@Model.CompanyName</td>
+    <td>@Model.Email</td>
+    <td>@Model.FirstName</td>
+    <td>@Model.LastName</td>
+    <td>@Model.Role</td>
+    <td>
+    @if (!Model.Disabled)
+    {
+        <span class="label label-success">Enabled</span>
+    }
+    else
+    {
+        <span class="label label-default">Disabled</span>
+    }
+    </td>
+    <td>@Model.CreateDate</td>
+    <td>
+        <div class="btn-group">
+            <a class="btn btn-default btn-sm" href="@Url.Action("EditUser", new { id = Model.Id })" title="Edit"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
+            <a class="btn btn-default btn-sm btn-disable" data-user-id="@Model.Id" href="#" title="@(Model.Disabled ? "Enable" : "Disable")"><i class="glyphicon glyphicon-@(Model.Disabled ? "ok-circle" : "ban-circle")"></i></a>
+        </div>          
+    </td>
+</tr>

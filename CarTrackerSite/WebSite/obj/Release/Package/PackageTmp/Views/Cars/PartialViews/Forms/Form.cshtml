@@ -1,0 +1,22 @@
+﻿@model WebSite.ViewModels.Cars.CarViewModel
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CarManufacurer)
+    @Html.TextBoxFor(model => model.CarManufacurer, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.CarManufacurer, "", new { @class = "text-danger" })
+</div>
+<div class="form-group">
+    @Html.LabelFor(model => model.CarModel)
+    @Html.TextBoxFor(model => model.CarModel, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.CarModel, "", new { @class = "text-danger" })
+</div>
+<div class="form-group">
+    @Html.LabelFor(model => model.CarNumber)
+    @Html.TextBoxFor(model => model.CarNumber, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.CarNumber, "", new { @class = "text-danger" })
+</div>
+<div class="form-group">
+    @Html.LabelFor(model => model.VINNumber)
+    @Html.TextBoxFor(model => model.VINNumber, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.VINNumber, "", new { @class = "text-danger" })
+</div>
