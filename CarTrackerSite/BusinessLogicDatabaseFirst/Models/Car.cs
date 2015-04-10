@@ -25,6 +25,9 @@ namespace BusinessLogic.Models
         public int UserId { get; set; }
         public string CarNumber { get; set; }
         public string VINNumber { get; set; }
+        public Nullable<decimal> FuelTankCapacity { get; set; }
+        public Nullable<decimal> FuelConsumptionUrban { get; set; }
+        public Nullable<decimal> FuelConsumptionExtraUrban { get; set; }
     
         public virtual BaseUser User { get; set; }
         public virtual ICollection<Location> Locations { get; set; }

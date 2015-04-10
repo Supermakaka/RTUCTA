@@ -2,6 +2,7 @@ package com.example.juris.cartrackapp;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -36,7 +39,8 @@ public class GPSFragment extends Fragment implements LocationListener {
     private static final String ARG_ACCURACY = "accuracy";
     private static final String ARG_ALTITUDE = "altitude";
     private static final String ARG_TIME = "time";
-
+    private static final int REQUEST_ENABLE_BT = 0;
+    private static final int REQUEST_DISCOVERABLE_BT = 0;
     // TODO: Rename and change types of parameters
     private String longitude;
     private String latitude;
@@ -50,7 +54,13 @@ public class GPSFragment extends Fragment implements LocationListener {
     private TextView accuracyTextView;
     private TextView altitudeTextView;
     private TextView timeTextView;
+    private TextView throtleTextView;
+    private TextView isTurnedOnTextView;
+    private TextView fuelTankTextView;
+    private TextView fuelConsumptionTextView;
+    private TextView millageTextView;
     private DateHelperClass dateHelperClass;
+
 
     private HttpResponseHadlerActivity httpHandler;
 
@@ -77,6 +87,56 @@ public class GPSFragment extends Fragment implements LocationListener {
         accuracyTextView = (TextView) view.findViewById(R.id.accuracy);
         altitudeTextView = (TextView) view.findViewById(R.id.altitude);
         timeTextView = (TextView) view.findViewById(R.id.time);
+        throtleTextView  = (TextView) view.findViewById(R.id.throtle);
+        isTurnedOnTextView = (TextView) view.findViewById(R.id.isturnedon);
+        fuelTankTextView = (TextView) view.findViewById(R.id.fueltank);
+        fuelConsumptionTextView = (TextView) view.findViewById(R.id.fuelconsumption);
+        millageTextView = (TextView) view.findViewById(R.id.millage);
+
+        final Button button1 = (Button) view.findViewById(R.id.button1);
+        final Button button2 = (Button) view.findViewById(R.id.button2);
+        final Button button3 = (Button) view.findViewById(R.id.button3);
+        final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (mBluetoothAdapter == null) {
+            Toast.makeText(getActivity().getApplicationContext(), "Bluetootth is not enabled" , Toast.LENGTH_LONG);
+        }
+        button1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (!mBluetoothAdapter.isEnabled()) {
+                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                }
+            }
+        });
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                if (!mBluetoothAdapter.isDiscovering()) {
+//                   out.append("MAKING YOUR DEVICE DISCOVERABLE");
+                    Context context = getActivity().getApplicationContext();
+                    CharSequence text = "MAKING YOUR DEVICE DISCOVERABLE";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+                    startActivityForResult(enableBtIntent, REQUEST_DISCOVERABLE_BT);
+
+                }
+            }
+        });
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                mBluetoothAdapter.disable();
+//            out.append("TURN_OFF BLUETOOTH");
+                Context context = getActivity().getApplicationContext();
+                CharSequence text = "TURNING_OFF BLUETOOTH";
+                int duration = Toast.LENGTH_LONG;
+                Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
+                toast.show();
+            }
+        });
 
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
@@ -135,6 +195,9 @@ public class GPSFragment extends Fragment implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
 
+        Random r = new Random();
+        double randomValue = 6.5 + (9.0 - 6.5) * r.nextDouble();
+
         longitude = String.valueOf(location.getLongitude());
         latitude = String.valueOf(location.getLatitude());
         accuracy = String.valueOf(location.getAccuracy());
@@ -147,6 +210,11 @@ public class GPSFragment extends Fragment implements LocationListener {
         accuracyTextView.setText(accuracy);
         altitudeTextView.setText(altitude);
         timeTextView.setText(time);
+        throtleTextView.setText(String.valueOf(location.getSpeed() * 70));
+        isTurnedOnTextView.setText("true");
+        fuelTankTextView.setText("75");
+        fuelConsumptionTextView.setText(String.valueOf(randomValue));
+        millageTextView.setText(String.valueOf(355234.00));
 
         JSONObject jsonObject = new JSONObject();
         try {
@@ -157,6 +225,11 @@ public class GPSFragment extends Fragment implements LocationListener {
             jsonObject.accumulate("Accuracy", accuracy);
             jsonObject.accumulate("CarId", "1");
             jsonObject.accumulate("Speed", speed);
+            jsonObject.accumulate("Mileage", String.valueOf(355234.00));
+            jsonObject.accumulate("FuelTank", "75");
+            jsonObject.accumulate("IsTurnedOn", "true");
+            jsonObject.accumulate("Throtle", String.valueOf(location.getSpeed() * 70));
+            jsonObject.accumulate("FuelConsumption", String.valueOf(randomValue));
         }catch (Exception e)
         {
             e.printStackTrace();

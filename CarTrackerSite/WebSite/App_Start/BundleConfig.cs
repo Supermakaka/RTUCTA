@@ -24,7 +24,8 @@ namespace WebSite
                         "~/Scripts/site.js",
                         "~/Scripts/DataTables-1.10.2/jquery.dataTables.js",
                         "~/Scripts/DataTables-1.10.2/dataTables.overrides.js",
-                        "~/Scripts/leaflet-routing-machine.js"
+                        "~/Scripts/leaflet-routing-machine.js",
+                        "~/Scripts/highchart/highchart.js"
 
                         ));
 
