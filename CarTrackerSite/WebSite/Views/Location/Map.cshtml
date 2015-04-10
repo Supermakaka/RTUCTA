@@ -22,7 +22,13 @@
                 <div class="col-lg-3">
                     <div class="form-group">
                         @Html.Label("Select Car")
-                        @Html.DropDownList("cars", new SelectList(Model.CarList, "value", "text"), new { @id = "car-dropdown" })
+                        @Html.DropDownList("seconds", new SelectList(DropDownHelper.SecondsIntervarList(), "value", "text"), new { @id = "seconds-interval" })
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        @Html.Label("Select Car")
+                        @Html.DropDownList("seconds", new SelectList(Model.CarList, "value", "text"), new { @id = "seconds-interval" })
                     </div>
                 </div>
             </div>

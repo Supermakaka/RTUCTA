@@ -29,14 +29,5 @@ namespace WebSite.ViewModels.Cars
         [Required]
         [Display(Name = "VIN")]
         public string VINNumber { get; set; }
-
-        [Display(Name = "Fuel Tank Capacity (l)")]
-        public decimal FuelTankCapacity { get; set; }
-
-        [Display(Name = "Fuel Consumption Urban (l/100km)")]
-        public decimal FuelConsumptionUrban { get; set; }
-
-        [Display(Name = "Fuel Consumption Extra Urban (l/100km)")]
-        public decimal FuelConsumptionExtraUrban { get; set; }
     }
 }

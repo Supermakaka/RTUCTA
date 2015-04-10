@@ -2,7 +2,6 @@
 using BusinessLogic.Models;
 using BusinessLogic.Services;
 using DataTables.Mvc;
-using DotNet.Highcharts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,16 +17,14 @@ namespace WebSite.Controllers
     public class CarsController : Controller
     {
         private ICarService carService;
-        private ILocationService locationService;
 
-        public CarsController(ICarService carsService, ILocationService locationService)
+        public CarsController(ICarService carsService)
         {
             this.carService = carsService;
-            this.locationService = locationService;
         }
 
         public ActionResult CarList()
-        {   
+        {
             return View();
         }
 
@@ -43,24 +40,6 @@ namespace WebSite.Controllers
 
             return Json(new DataTablesResponse(request.Draw, model, res.TotalFilteredRecords, res.TotalRecords), JsonRequestBehavior.AllowGet);
         }
-
-        //public ActionResult GetCarData(int carId, DateTime? dateFrom, DateTime? dateTo)
-        //{
-        //    //Car car = carService.GetById(carId);
-
-        //    //IQueryable<Location> locations = (dateFrom.HasValue && dateTo.HasValue) ? locationService.GetMany(s => s.CarId == carId && s.Time >= dateFrom && s.Time <= dateTo) 
-        //    //    : locationService.GetMany(s => s.CarId == car.Id);
-
-        //    //return Json(new {
-
-        //    //    Success = true,
-        //    //    SpeedArray = locations.Select(s => s.Speed).ToArray(),
-        //    //    TimeArray = locations.Select(s => s.Time).ToArray(),
-        //    //    CarNumber = car.CarNumber,
-        //    //    CarId = car.Id
-
-        //    //}, JsonRequestBehavior.AllowGet);
-        //}
 
         #region Cars CRUD Actions
 
@@ -107,41 +86,6 @@ namespace WebSite.Controllers
             carService.Delete(car);
 
             return Json(new { success = true });
-        }
-
-        public ActionResult CarInfo(int id, DateTime? dateFrom, DateTime? dateTo)
-        {
-            Car car = carService.GetById(id);
-
-            IQueryable<Location> locations = (dateFrom.HasValue && dateTo.HasValue) ? locationService.GetMany(s => s.CarId == id && s.Time >= dateFrom && s.Time <= dateTo)
-                : locationService.GetMany(s => s.CarId == car.Id);
-
-            Highcharts model = ChartHelper.SpeedChart(car, locations);
-
-            return View(CarInfoViewModelFactory(id, dateFrom, dateTo));
-        }
-
-        public ActionResult UpdateCarInfoView(int id, DateTime? dateFrom, DateTime? dateTo)
-        {
-            return View(CarInfoViewModelFactory(id, dateFrom, dateTo));
-        }
-
-        public CarInfoViewModel CarInfoViewModelFactory(int id, DateTime? dateFrom, DateTime? dateTo)
-        {
-            Car car = carService.GetById(id);
-
-            IQueryable<Location> locations = (dateFrom.HasValue && dateTo.HasValue) ? locationService.GetMany(s => s.CarId == id && s.Time >= dateFrom && s.Time <= dateTo)
-                : locationService.GetMany(s => s.CarId == car.Id);
-
-            IQueryable<Location> AllLocations = locationService.GetMany(s => s.CarId == car.Id);
-
-            CarInfoViewModel model = new CarInfoViewModel();
-
-            model.SpeedChart = ChartHelper.SpeedChart(car, locations);
-            model.AverageSpeedPerPeriod = ChartHelper.AverageSpeedPerSelectedPeriod(car, locations, "chart2");
-            model.AverageSpeedPerAllTime = ChartHelper.AverageSpeedPerSelectedPeriod(car, AllLocations, "chart3");
-
-            return model;
         }
 
         #endregion

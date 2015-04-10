@@ -58,4 +58,3 @@ E:\Projects\Projekts\RTUCTA\CarTrackerSite\WebSite\bin\BCrypt.Net.xml
 E:\Projects\Projekts\RTUCTA\CarTrackerSite\WebSite\obj\Debug\WebSite.csprojResolveAssemblyReference.cache
 E:\Projects\Projekts\RTUCTA\CarTrackerSite\WebSite\obj\Debug\WebSite.dll
 E:\Projects\Projekts\RTUCTA\CarTrackerSite\WebSite\obj\Debug\WebSite.pdb
-E:\Projects\Projekts\RTUCTA\CarTrackerSite\WebSite\bin\DotNet.Highcharts.dll

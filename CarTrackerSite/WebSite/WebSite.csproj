@@ -67,9 +67,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\dotless.1.4.1.0\lib\dotless.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DotNet.Highcharts">
-      <HintPath>..\packages\DotNet.Highcharts.4.0\lib\DotNet.Highcharts.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
@@ -188,7 +185,6 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Core\ActionAttributes\AutoMap.cs" />
     <Compile Include="Core\CookieStorage.cs" />
-    <Compile Include="Core\Helpers\ChartHelper.cs" />
     <Compile Include="Core\Helpers\DropDownHelper.cs" />
     <Compile Include="Core\Helpers\DynamicFilter.cs" />
     <Compile Include="Core\Helpers\FilteringParametersHelper.cs" />
@@ -206,7 +202,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\Cars\CarInfoViewModel.cs" />
     <Compile Include="ViewModels\Cars\CarsListViewModel.cs" />
     <Compile Include="ViewModels\Cars\CarViewModel.cs" />
     <Compile Include="ViewModels\Cars\Mappings.cs" />
@@ -322,40 +317,6 @@
     <Content Include="Scripts\DataTables-1.10.2\jquery.dataTables.js" />
     <Content Include="Scripts\DataTables-1.10.2\jquery.dataTables.min.js" />
     <Content Include="Scripts\DataTables-1.10.2\jquery.dataTables.overrides.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\adapters\standalone-framework.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\adapters\standalone-framework.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts-3d.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts-3d.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts-all.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts-more.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts-more.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\canvas-tools.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\canvas-tools.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\data.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\data.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\drilldown.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\drilldown.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\exporting.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\exporting.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\funnel.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\funnel.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\heatmap.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\heatmap.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\no-data-to-display.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\no-data-to-display.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\solid-gauge.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\solid-gauge.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\themes\dark-blue.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\themes\dark-green.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\themes\dark-unica.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\themes\gray.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\themes\grid-light.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\themes\grid.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\themes\sand-signika.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\themes\skies.js" />
-    <Content Include="Scripts\highchart\highchart.js" />
     <Content Include="Scripts\images\layers-2x.png" />
     <Content Include="Scripts\images\layers.png" />
     <Content Include="Scripts\images\marker-icon-2x.png" />
@@ -456,14 +417,11 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.bootstrap.min.js.map" />
     <Content Include="Views\Location\Map.cshtml" />
     <Content Include="Views\Cars\CarList.cshtml" />
-    <Content Include="Views\Web.config">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Views\Web.config" />
     <Content Include="Views\Cars\PartialViews\Modals\Create.cshtml" />
     <Content Include="Views\Cars\PartialViews\Modals\Edit.cshtml" />
     <Content Include="Views\Cars\PartialViews\Forms\Form.cshtml" />
     <Content Include="Views\Shared\PartialViews\Modals\Delete.cshtml" />
-    <Content Include="Views\Cars\CarInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -71,9 +71,7 @@
             },
             {
                 data: function (row, type, val, meta) {
-                    return '<div class="btn-group">'
-                    + '<a class="btn btn-default btn-sm" href="/Cars/CarInfo?id=' + row["Id"] + '" id="btn-view" title="View"><i class="fa fa-eye"></i> View</a>'
-                    + '<a class="btn btn-default btn-sm" data-id="' + row["Id"] + '" id="btn-edit" title="Edit"><i class="fa fa-pencil"></i> Edit</a>'
+                    return '<div class="btn-group"><a class="btn btn-default btn-sm" data-id="' + row["Id"] + '" id="btn-edit" title="Edit"><i class="fa fa-pencil"></i> Edit</a>'
                     + '<a class="btn btn-default btn-sm" id="btn-delete" data-id="' + row["Id"] + '" title="Delete"><i class="fa fa-trash"></i></a>'
                     + '</div>'
                 },
@@ -152,10 +150,13 @@
 
     $(document).on('click', '#btn-delete', function () {
 
+        currentMaterialTable = $(this).closest('table').DataTable();
+        var materialId = currentMaterialTable.row($(this).closest('tr')).data()["Id"];
+
         $.ajax({
             url: '/Cars/Delete',
             type: 'GET',
-            data: { id: $(this).data('id') },
+            data: { id: materialId },
             success: function (data) {
                 $('#modal .modal-content').html(data);
                 $('#modal').modal('show');

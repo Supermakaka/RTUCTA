@@ -21,13 +21,7 @@ namespace BusinessLogic.Models
         public decimal Altitude { get; set; }
         public decimal Accuracy { get; set; }
         public int CarId { get; set; }
-        public decimal Speed { get; set; }
-        public Nullable<decimal> Mileage { get; set; }
-        public Nullable<decimal> FuelTank { get; set; }
-        public Nullable<decimal> IsTurnedOn { get; set; }
-        public Nullable<decimal> Throtle { get; set; }
-        public Nullable<decimal> FuelConsumption { get; set; }
-    
+        public decimal Speed { get; set; }    
         public virtual Car Car { get; set; }
     }
 }
