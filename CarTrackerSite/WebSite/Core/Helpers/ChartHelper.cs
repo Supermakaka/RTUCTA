@@ -28,7 +28,49 @@ namespace WebSite.Core.Helpers
 
             Highcharts chart = new Highcharts("chart")
                 .InitChart(new Chart { Type = ChartTypes.Line })
-                .SetTitle(new Title { Text = "Chart" })
+                .SetTitle(new Title { Text = "Speed Chart" })
+                .SetXAxis(new XAxis { Type = AxisTypes.Datetime })
+                .SetSeries(new Series { Data = new Data(chartData) });
+
+            return chart;
+        }
+
+        public static Highcharts ThrotleChart(Car car, IQueryable<Location> locations)
+        {
+            List<ChartDecimalDateClass> data = locations.Select(s => new ChartDecimalDateClass { ExecutionDate = s.Time, ExecutionValue = s.Throtle.Value }).ToList();
+            object[,] chartData = new object[data.Count, 2];
+            int i = 0;
+            foreach (ChartDecimalDateClass item in data)
+            {
+                chartData.SetValue(item.ExecutionDate, i, 0);
+                chartData.SetValue(item.ExecutionValue, i, 1);
+                i++;
+            }
+
+            Highcharts chart = new Highcharts("throtleChart")
+                .InitChart(new Chart { Type = ChartTypes.Line })
+                .SetTitle(new Title { Text = "Throtle Chart" })
+                .SetXAxis(new XAxis { Type = AxisTypes.Datetime })
+                .SetSeries(new Series { Data = new Data(chartData) });
+
+            return chart;
+        }
+
+        public static Highcharts MillageChart(Car car, IQueryable<Location> locations)
+        {
+            List<ChartDecimalDateClass> data = locations.Select(s => new ChartDecimalDateClass { ExecutionDate = s.Time, ExecutionValue = s.Mileage.Value }).ToList();
+            object[,] chartData = new object[data.Count, 2];
+            int i = 0;
+            foreach (ChartDecimalDateClass item in data)
+            {
+                chartData.SetValue(item.ExecutionDate, i, 0);
+                chartData.SetValue(item.ExecutionValue, i, 1);
+                i++;
+            }
+
+            Highcharts chart = new Highcharts("millageChart")
+                .InitChart(new Chart { Type = ChartTypes.Line })
+                .SetTitle(new Title { Text = "Millage Chart" })
                 .SetXAxis(new XAxis { Type = AxisTypes.Datetime })
                 .SetSeries(new Series { Data = new Data(chartData) });
 
@@ -46,7 +88,7 @@ namespace WebSite.Core.Helpers
                     PlotBorderWidth = 0,
                     PlotShadow = false
                 })
-                .SetTitle(new Title { Text = "Speedometer" })
+                .SetTitle(new Title { Text = chartName == "chart2" ? "Average speed per period" : "Total average speed" })
                 .SetPane(new Pane
                 {
                     StartAngle = -150,
@@ -113,7 +155,7 @@ namespace WebSite.Core.Helpers
                 })
                 .SetSeries(new Series
                 {
-                    Name = "Average speed / period",
+                    Name = "Average speed",
                     Data = new Data(new object[] { locations.Select(s => s.Speed).Average() })
                 });
 
@@ -131,11 +173,11 @@ namespace WebSite.Core.Helpers
                     PlotBorderWidth = 0,
                     PlotShadow = false
                 })
-                .SetTitle(new Title { Text = "Fuel Consumption" })
+                .SetTitle(new Title { Text = chartName == "chart4" ? "Total Fuel Consumption" : "Fuel Consumption per period" })
                 .SetPane(new Pane
                 {
-                    StartAngle = -150,
-                    EndAngle = 150,
+                    StartAngle = -90,
+                    EndAngle = 90,
                     Background = new[]
                     {
                         new BackgroundObject
@@ -171,7 +213,7 @@ namespace WebSite.Core.Helpers
                 .SetYAxis(new YAxis
                 {
                     Min = 0,
-                    Max = 200,
+                    Max = 20,
 
                     //MinorTickInterval = "auto",
                     MinorTickWidth = 1,
@@ -188,18 +230,18 @@ namespace WebSite.Core.Helpers
                         Step = 2,
                         //Rotation = "auto"
                     },
-                    Title = new YAxisTitle { Text = "km/h" },
+                    Title = new YAxisTitle { Text = "l/100km" },
                     PlotBands = new[]
                     {
-                        new YAxisPlotBands { From = 0, To = 120, Color = ColorTranslator.FromHtml("#55BF3B") },
-                        new YAxisPlotBands { From = 120, To = 160, Color = ColorTranslator.FromHtml("#DDDF0D") },
-                        new YAxisPlotBands { From = 160, To = 200, Color = ColorTranslator.FromHtml("#DF5353") }
+                        new YAxisPlotBands { From = 0, To = 8, Color = ColorTranslator.FromHtml("#55BF3B") },
+                        new YAxisPlotBands { From = 8, To = 12, Color = ColorTranslator.FromHtml("#DDDF0D") },
+                        new YAxisPlotBands { From = 12, To = 20, Color = ColorTranslator.FromHtml("#DF5353") }
                     }
                 })
                 .SetSeries(new Series
                 {
-                    Name = "Average speed / period",
-                    Data = new Data(new object[] { locations.Select(s => s.Speed).Average() })
+                    Name = "Fuel Consumption",
+                    Data = new Data(new object[] { locations.Select(s => s.FuelConsumption).Average() })
                 });
 
             return chart;

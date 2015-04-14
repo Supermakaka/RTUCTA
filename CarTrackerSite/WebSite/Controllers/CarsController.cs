@@ -140,6 +140,10 @@ namespace WebSite.Controllers
             model.SpeedChart = ChartHelper.SpeedChart(car, locations);
             model.AverageSpeedPerPeriod = ChartHelper.AverageSpeedPerSelectedPeriod(car, locations, "chart2");
             model.AverageSpeedPerAllTime = ChartHelper.AverageSpeedPerSelectedPeriod(car, AllLocations, "chart3");
+            model.AverageFuelCompsuntionPerAllTime = ChartHelper.AverageFuelConsumption(car, AllLocations, "chart4");
+            model.AverageFuelCompsuntionPerSelectedPeriod = ChartHelper.AverageFuelConsumption(car, locations, "chart5");
+            model.ThrotleChart = ChartHelper.ThrotleChart(car, locations);
+            model.MillageChart = ChartHelper.MillageChart(car, locations);
 
             return model;
         }

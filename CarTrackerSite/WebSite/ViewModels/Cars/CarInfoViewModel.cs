@@ -14,7 +14,10 @@ namespace WebSite.ViewModels.Cars
         public Highcharts SpeedChart { get; set; }
         public Highcharts AverageSpeedPerPeriod { get; set; }
         public Highcharts AverageSpeedPerAllTime { get; set; }
-        public Highcharts AverageFuelCompsuntionPerTime { get; set; }
+        public Highcharts AverageFuelCompsuntionPerSelectedPeriod { get; set; }
+        public Highcharts AverageFuelCompsuntionPerAllTime { get; set; }
+        public Highcharts ThrotleChart { get; set; }
+        public Highcharts MillageChart { get; set; }
         public Highcharts DrivenKilometersPerPeriodChart { get; set; }
     }
 }

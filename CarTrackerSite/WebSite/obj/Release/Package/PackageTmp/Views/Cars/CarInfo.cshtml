@@ -13,6 +13,16 @@
     </div>
 </div>
 <div class="row">
+    <div class="col-md-12">
+        @Model.MillageChart
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        @Model.ThrotleChart
+    </div>
+</div>
+<div class="row">
     <div class="col-md-6">
         @Model.AverageSpeedPerPeriod
     </div>
@@ -21,74 +31,77 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-12">
-
+    <div class="col-md-6">
+        @Model.AverageFuelCompsuntionPerSelectedPeriod
+    </div>
+    <div class="col-md-6">
+        @Model.AverageFuelCompsuntionPerAllTime
     </div>
 </div>
 
 
 @*<script>
 
-    /*------------- Car API ---------------
+        /*------------- Car API ---------------
 
-        Success ................ Data recived sucessfuly bool
-        SpeedArray ............. Array Of Car Speed data
-        TimeArray .............. Array Of Time Stamp Period
-        CarNumber .............. Car Registration Number
-        CarId .................. Car ID number
+            Success ................ Data recived sucessfuly bool
+            SpeedArray ............. Array Of Car Speed data
+            TimeArray .............. Array Of Time Stamp Period
+            CarNumber .............. Car Registration Number
+            CarId .................. Car ID number
 
-    --------------------------------------*/
+        --------------------------------------*/
 
-    $(function () {
-        $(document).ready(function () {
-            $.ajax({
-                url: '/Cars/GetCarData',
-                type: 'GET',
-                async: true,
-                dataType: "json",
-                data: {
-                    carId: '@Model'
-                },
-                success: function (data) {
-                    drawSpeedGraph(data);
-                }
+        $(function () {
+            $(document).ready(function () {
+                $.ajax({
+                    url: '/Cars/GetCarData',
+                    type: 'GET',
+                    async: true,
+                    dataType: "json",
+                    data: {
+                        carId: '@Model'
+                    },
+                    success: function (data) {
+                        drawSpeedGraph(data);
+                    }
+                });
             });
-        });
 
-        function drawSpeedGraph(recievedData) {
-            $('.chart-container').highcharts({
-                chart: {
-                    type: 'line'
-                },
-                title: {
-                    text: 'Average Speed'
-                },
-                subtitle: {
-                    text: 'Car: ' + recievedData.CarNumber
-                },
-                xAxis: {
-                    categories: recievedData.TimeArray
-                },
-                yAxis: {
+            function drawSpeedGraph(recievedData) {
+                $('.chart-container').highcharts({
+                    chart: {
+                        type: 'line'
+                    },
                     title: {
-                        text: 'Speed (km/h)'
+                        text: 'Average Speed'
+                    },
+                    subtitle: {
+                        text: 'Car: ' + recievedData.CarNumber
+                    },
+                    xAxis: {
+                        categories: recievedData.TimeArray
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Speed (km/h)'
+                        }
+                    },
+                    plotOptions: {
+                        line: {
+                            dataLabels: {
+                                enabled: true
+                            },
+                            enableMouseTracking: false
+                        }
+                    },
+                    series: {
+                        name: recievedData.CarNumber,
+                        data: recievedData.SpeedArray
                     }
-                },
-                plotOptions: {
-                    line: {
-                        dataLabels: {
-                            enabled: true
-                        },
-                        enableMouseTracking: false
-                    }
-                },
-                series: {
-                    name: recievedData.CarNumber,
-                    data: recievedData.SpeedArray
-                }
-            });
-        }
+                });
+            }
 
-        
-});
-</script>*@
+
+    });
+    </script>*@

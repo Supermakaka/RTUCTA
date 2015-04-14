@@ -83,9 +83,9 @@
     <NavigationProperty Name="Locations" Relationship="BusinessLogic.Models.FK_Location_Car" FromRole="Car" ToRole="Location" />
     <Property Name="CarNumber" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="VINNumber" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="FuelTankCapacity" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="FuelConsumptionUrban" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="FuelConsumptionExtraUrban" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="FuelTankCapacity" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="FuelConsumptionUrban" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="FuelConsumptionExtraUrban" Type="Decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="Location">
     <Key>
@@ -103,8 +103,8 @@
     <Property Name="Mileage" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="FuelTank" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="IsTurnedOn" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="Throtle" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="FuelConsumption" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Throtle" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="FuelConsumption" Type="Decimal" Precision="18" Scale="2" />
   </EntityType>
   <Association Name="FK_Car_User">
     <End Type="BusinessLogic.Models.BaseUser" Multiplicity="1" Role="BaseUser" />

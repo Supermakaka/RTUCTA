@@ -10,6 +10,9 @@
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="CarNumber" Type="nvarchar(max)" Nullable="false" />
     <Property Name="VINNumber" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FuelTankCapacity" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="FuelConsumptionUrban" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="FuelConsumptionExtraUrban" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="Company">
     <Key>
@@ -30,6 +33,11 @@
     <Property Name="Accuracy" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="CarId" Type="int" Nullable="false" />
     <Property Name="Speed" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Mileage" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="FuelTank" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="IsTurnedOn" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Throtle" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="FuelConsumption" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="User">
     <Key>
