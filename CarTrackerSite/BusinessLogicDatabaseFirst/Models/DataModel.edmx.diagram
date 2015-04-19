@@ -18,6 +18,8 @@
         <AssociationConnector Association="BusinessLogic.Models.FK_Location_Car" />
         <EntityTypeShape EntityType="BusinessLogic.Models.Company" Width="1.5" PointX="0.875" PointY="1.125" />
         <AssociationConnector Association="BusinessLogic.Models.FK_User_Company" />
+        <EntityTypeShape EntityType="BusinessLogic.Models.TroubleCode" Width="1.5" PointX="8" PointY="0.75" />
+        <AssociationConnector Association="BusinessLogic.Models.CarToFaultCodes" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

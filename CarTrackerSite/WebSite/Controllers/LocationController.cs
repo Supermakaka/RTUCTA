@@ -32,6 +32,10 @@ namespace WebSite.Controllers
 
             locationService.Add(location);
 
+            List<string> codesArray = String.IsNullOrEmpty(locationVM.TroubleCodes) ? new List<string>() : locationVM.TroubleCodes.Split(new string[] { "\\n" }, StringSplitOptions.None).ToList();
+
+            carService.AddTroubleCodesToCar(carService.GetById(Convert.ToInt32(locationVM.CarId)), codesArray);
+
             return Json(new { succes = true }, JsonRequestBehavior.AllowGet);
         }
 

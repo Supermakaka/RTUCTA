@@ -17,6 +17,7 @@ namespace BusinessLogic.Models
         public Car()
         {
             this.Locations = new HashSet<Location>();
+            this.TroubleCodes = new HashSet<TroubleCode>();
         }
     
         public int Id { get; set; }
@@ -31,5 +32,6 @@ namespace BusinessLogic.Models
     
         public virtual BaseUser User { get; set; }
         public virtual ICollection<Location> Locations { get; set; }
+        public virtual ICollection<TroubleCode> TroubleCodes { get; set; }
     }
 }

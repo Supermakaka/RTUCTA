@@ -28,6 +28,21 @@ namespace BusinessLogic.Services
             return base.GetMany(s => s.UserId == userId);
         }
 
+        public void AddTroubleCodesToCar(Car car, List<string> troubleCodes)
+        {
+            List<TroubleCode> tempList = car.TroubleCodes.ToList();
+
+            foreach (TroubleCode code in tempList)
+                car.TroubleCodes.Remove(code);
+
+            List<TroubleCode> codes = dataContext.TroubleCodes.Where(s => troubleCodes.Contains(s.DTCNumber)).ToList();
+
+            foreach (TroubleCode code in codes)
+                car.TroubleCodes.Add(code);
+
+            dataContext.SaveChanges();
+        }
+
         #endregion
     }
 
@@ -35,5 +50,6 @@ namespace BusinessLogic.Services
     {
         IEnumerable<DropDownListModel> GetUserCarsDropDown(int userId);
         IQueryable<Car> GetAll(int userId);
+        void AddTroubleCodesToCar(Car car, List<string> troubleCodes);
     }
 }

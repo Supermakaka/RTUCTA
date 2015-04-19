@@ -19,6 +19,14 @@
           <Property Name="FuelConsumptionUrban" Type="decimal" Precision="18" Scale="2" />
           <Property Name="FuelConsumptionExtraUrban" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
+        <EntityType Name="CarToFaultCodes">
+          <Key>
+            <PropertyRef Name="CarID" />
+            <PropertyRef Name="TroubleCodeID" />
+          </Key>
+          <Property Name="CarID" Type="int" Nullable="false" />
+          <Property Name="TroubleCodeID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Company">
           <Key>
             <PropertyRef Name="Id" />
@@ -40,9 +48,17 @@
           <Property Name="Speed" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Mileage" Type="decimal" Precision="18" Scale="2" />
           <Property Name="FuelTank" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="IsTurnedOn" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IsTurnedOn" Type="bit" />
           <Property Name="Throtle" Type="decimal" Precision="18" Scale="2" />
           <Property Name="FuelConsumption" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="TroubleCodes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DTCNumber" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -81,6 +97,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CarToFaultCodes_Car">
+          <End Role="Car" Type="Self.Car" Multiplicity="1" />
+          <End Role="CarToFaultCodes" Type="Self.CarToFaultCodes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Car">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarToFaultCodes">
+              <PropertyRef Name="CarID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CarToFaultCodes_TroubleCodes">
+          <End Role="TroubleCodes" Type="Self.TroubleCodes" Multiplicity="1" />
+          <End Role="CarToFaultCodes" Type="Self.CarToFaultCodes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TroubleCodes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CarToFaultCodes">
+              <PropertyRef Name="TroubleCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Location_Car">
           <End Role="Car" Type="Self.Car" Multiplicity="1" />
           <End Role="Location" Type="Self.Location" Multiplicity="*" />
@@ -107,13 +147,23 @@
         </Association>
         <EntityContainer Name="BusinessLogicModelsStoreContainer">
           <EntitySet Name="Car" EntityType="Self.Car" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarToFaultCodes" EntityType="Self.CarToFaultCodes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TroubleCodes" EntityType="Self.TroubleCodes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserOrder" EntityType="Self.UserOrder" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Car_User" Association="Self.FK_Car_User">
             <End Role="User" EntitySet="User" />
             <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CarToFaultCodes_Car" Association="Self.FK_CarToFaultCodes_Car">
+            <End Role="Car" EntitySet="Car" />
+            <End Role="CarToFaultCodes" EntitySet="CarToFaultCodes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CarToFaultCodes_TroubleCodes" Association="Self.FK_CarToFaultCodes_TroubleCodes">
+            <End Role="TroubleCodes" EntitySet="TroubleCodes" />
+            <End Role="CarToFaultCodes" EntitySet="CarToFaultCodes" />
           </AssociationSet>
           <AssociationSet Name="FK_Location_Car" Association="Self.FK_Location_Car">
             <End Role="Car" EntitySet="Car" />
@@ -176,6 +226,11 @@
             <End EntitySet="Companies" Role="Company" />
             <End EntitySet="Users" Role="BaseUser" />
           </AssociationSet>
+          <EntitySet Name="TroubleCodes" EntityType="BusinessLogic.Models.TroubleCode" />
+          <AssociationSet Name="CarToFaultCodes" Association="BusinessLogic.Models.CarToFaultCodes">
+            <End Role="Car" EntitySet="Cars" />
+            <End Role="TroubleCode" EntitySet="TroubleCodes" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="User" BaseType="BusinessLogic.Models.BaseUser" >
           <Property Name="Role" Type="BusinessLogic.Models.UserRoles" Nullable="false" />
@@ -214,6 +269,7 @@
           <Property Name="FuelTankCapacity" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="FuelConsumptionUrban" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="FuelConsumptionExtraUrban" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="TroubleCodes" Relationship="BusinessLogic.Models.CarToFaultCodes" FromRole="Car" ToRole="TroubleCode" />
         </EntityType>
         <EntityType Name="Location">
           <Key>
@@ -230,7 +286,6 @@
           <Property Name="Speed" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Mileage" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="FuelTank" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="IsTurnedOn" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Throtle" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="FuelConsumption" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
@@ -277,6 +332,19 @@
               <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TroubleCode">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DTCNumber" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cars" Relationship="BusinessLogic.Models.CarToFaultCodes" FromRole="TroubleCode" ToRole="Car" />
+        </EntityType>
+        <Association Name="CarToFaultCodes">
+          <End Type="BusinessLogic.Models.Car" Role="Car" Multiplicity="*" />
+          <End Type="BusinessLogic.Models.TroubleCode" Role="TroubleCode" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -342,7 +410,6 @@
               <MappingFragment StoreEntitySet="Location">
                 <ScalarProperty Name="FuelConsumption" ColumnName="FuelConsumption" />
                 <ScalarProperty Name="Throtle" ColumnName="Throtle" />
-                <ScalarProperty Name="IsTurnedOn" ColumnName="IsTurnedOn" />
                 <ScalarProperty Name="FuelTank" ColumnName="FuelTank" />
                 <ScalarProperty Name="Mileage" ColumnName="Mileage" />
                 <ScalarProperty Name="Speed" ColumnName="Speed" />
@@ -364,6 +431,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TroubleCodes">
+            <EntityTypeMapping TypeName="BusinessLogic.Models.TroubleCode">
+              <MappingFragment StoreEntitySet="TroubleCodes">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DTCNumber" ColumnName="DTCNumber" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="CarToFaultCodes" TypeName="BusinessLogic.Models.CarToFaultCodes" StoreEntitySet="CarToFaultCodes">
+            <EndProperty Name="TroubleCode">
+              <ScalarProperty Name="ID" ColumnName="TroubleCodeID" />
+            </EndProperty>
+            <EndProperty Name="Car">
+              <ScalarProperty Name="Id" ColumnName="CarID" />
+            </EndProperty>
+          </AssociationSetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

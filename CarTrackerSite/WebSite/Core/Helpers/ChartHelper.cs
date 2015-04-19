@@ -246,6 +246,91 @@ namespace WebSite.Core.Helpers
 
             return chart;
         }
+
+        public static Highcharts FuelCapacity(Car car, IQueryable<Location> locations, string chartName)
+        {
+            Highcharts chart = new Highcharts(chartName)
+                .InitChart(new Chart
+                {
+                    Type = ChartTypes.Gauge,
+                    PlotBackgroundColor = null,
+                    PlotBackgroundImage = null,
+                    PlotBorderWidth = 0,
+                    PlotShadow = false
+                })
+                .SetTitle(new Title { Text = chartName})
+                .SetPane(new Pane
+                {
+                    StartAngle = -90,
+                    EndAngle = 90,
+                    Background = new[]
+                    {
+                        new BackgroundObject
+                        {
+                            BackgroundColor = new BackColorOrGradient(new Gradient
+                            {
+                                LinearGradient = new[] { 0, 0, 0, 1 },
+                                Stops = new object[,] { { 0, "#FFF" }, { 1, "#333" } }
+                            }),
+                            BorderWidth = new PercentageOrPixel(0),
+                            OuterRadius = new PercentageOrPixel(109, true)
+                        },
+                        new BackgroundObject
+                        {
+                            BackgroundColor = new BackColorOrGradient(new Gradient
+                            {
+                                LinearGradient = new[] { 0, 0, 0, 1 },
+                                Stops = new object[,] { { 0, "#333" }, { 1, "#FFF" } }
+                            }),
+                            BorderWidth = new PercentageOrPixel(1),
+                            OuterRadius = new PercentageOrPixel(107, true)
+                        },
+                        new BackgroundObject(),
+                        new BackgroundObject
+                        {
+                            BackgroundColor = new BackColorOrGradient(ColorTranslator.FromHtml("#DDD")),
+                            BorderWidth = new PercentageOrPixel(0),
+                            OuterRadius = new PercentageOrPixel(105, true),
+                            InnerRadius = new PercentageOrPixel(103, true)
+                        }
+                    }
+                })
+                .SetYAxis(new YAxis
+                {
+                    Min = 0,
+                    Max = 20,
+
+                    //MinorTickInterval = "auto",
+                    MinorTickWidth = 1,
+                    MinorTickLength = 10,
+                    MinorTickPosition = TickPositions.Inside,
+                    MinorTickColor = ColorTranslator.FromHtml("#666"),
+                    TickPixelInterval = 30,
+                    TickWidth = 2,
+                    TickPosition = TickPositions.Inside,
+                    TickLength = 10,
+                    TickColor = ColorTranslator.FromHtml("#666"),
+                    Labels = new YAxisLabels
+                    {
+                        Step = 2,
+                        //Rotation = "auto"
+                    },
+                    Title = new YAxisTitle { Text = "l/100km" },
+                    PlotBands = new[]
+                    {
+                        new YAxisPlotBands { From = 0, To = 8, Color = ColorTranslator.FromHtml("#55BF3B") },
+                        new YAxisPlotBands { From = 8, To = 12, Color = ColorTranslator.FromHtml("#DDDF0D") },
+                        new YAxisPlotBands { From = 12, To = 20, Color = ColorTranslator.FromHtml("#DF5353") }
+                    }
+                })
+                .SetSeries(new Series
+                {
+                    Name = "Fuel L",
+                    Data = new Data(new object[] { locations.LastOrDefault().FuelTank * car.FuelTankCapacity / 100 })
+                });
+
+            return chart;
+        }
     }
 }
 

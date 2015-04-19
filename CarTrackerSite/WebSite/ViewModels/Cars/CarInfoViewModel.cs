@@ -1,4 +1,5 @@
-﻿using DotNet.Highcharts;
+﻿using BusinessLogic.Models;
+using DotNet.Highcharts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace WebSite.ViewModels.Cars
     public class CarInfoViewModel
     {   
         public int ID { get; set; }
+        public Car UserCar { get; set; }
         public DateTime TimeFrom { get; set; }
         public DateTime TimeTo { get; set; }
         public Highcharts SpeedChart { get; set; }

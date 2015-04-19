@@ -22,6 +22,7 @@ namespace BusinessLogic.Models
         DbSet<BaseUser> Users { get; set; }
         DbSet<UserOrder> UserOrders { get; set; }
         DbSet<Location> Locations { get; set; }
+        DbSet<TroubleCode> TroubleCodes { get; set; }
         DbSet<Car> Cars { get; set; }
         int SaveChanges();
     }

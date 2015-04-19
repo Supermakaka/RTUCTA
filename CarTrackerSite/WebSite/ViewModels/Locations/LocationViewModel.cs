@@ -10,42 +10,44 @@ namespace WebSite.ViewModels.Locations
     public class LocationViewModel
     {
         [Display(Name="ID")]
-        public int? Id { get; set; }
+        public string Id { get; set; }
         
         [Display(Name = "Longitude")]
-        public decimal? Longitude { get; set; }
+        public string Longitude { get; set; }
 
         [Display(Name = "Latitude")]
-        public decimal? Latitude { get; set; }
+        public string Latitude { get; set; }
 
         [Display(Name = "Time")]
-        public System.DateTime? Time { get; set; }
+        public string Time { get; set; }
 
         [Display(Name = "Altitude")]
-        public decimal? Altitude { get; set; }
+        public string Altitude { get; set; }
 
         [Display(Name = "Accuracy")]
-        public decimal? Accuracy { get; set; }
+        public string Accuracy { get; set; }
 
         [Display(Name = "Speed")]
-        public decimal? Speed { get; set; }
+        public string Speed { get; set; }
 
         [Display(Name = "Car ID")]
-        public int? CarId { get; set; }
+        public string CarId { get; set; }
         
         [Display(Name = "Milage")]
-        public Nullable<decimal> Mileage { get; set; }
+        public string Mileage { get; set; }
         
         [Display(Name = "Fuel Tank Capacity")]
-        public Nullable<decimal> FuelTank { get; set; }
+        public string FuelTank { get; set; }
         
         [Display(Name = "")]
-        public Nullable<decimal> IsTurnedOn { get; set; }
+        public string IsTurnedOn { get; set; }
+
+        public string TroubleCodes { get; set; }
         
         [Display(Name = "Throtle")]
-        public Nullable<decimal> Throtle { get; set; }
+        public string Throtle { get; set; }
         
         [Display(Name = "Fuel Consumption")]
-        public Nullable<decimal> FuelConsumption { get; set; }
+        public string FuelConsumption { get; set; }
     }
 }

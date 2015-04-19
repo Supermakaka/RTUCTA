@@ -4,9 +4,34 @@
     ViewBag.Title = "CarInfo";
 }
 <div class="chart-container">
-
+@Html.HiddenFor(m => m.ID, new { @id = "car-id"})
 </div>
 <h2>CarInfo</h2>
+<div class="row">
+    <div class="row">
+        <div class="col-md-4">
+            <strong>From</strong>
+            <div class="input-group date" id="datetimepicker1">
+                <input type="text" id="dateFrom" name="dateFrom" class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <strong>To</strong>
+            <div class="input-group date" id="datetimepicker2">
+                <input type="text" id="dateTo" name="dateTo" class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <button type="button" class="btn btn-primary" id="date-submit-button">Submit</button>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-12">
         @Model.SpeedChart
@@ -38,70 +63,32 @@
         @Model.AverageFuelCompsuntionPerAllTime
     </div>
 </div>
-
-
-@*<script>
-
-        /*------------- Car API ---------------
-
-            Success ................ Data recived sucessfuly bool
-            SpeedArray ............. Array Of Car Speed data
-            TimeArray .............. Array Of Time Stamp Period
-            CarNumber .............. Car Registration Number
-            CarId .................. Car ID number
-
-        --------------------------------------*/
-
-        $(function () {
-            $(document).ready(function () {
-                $.ajax({
-                    url: '/Cars/GetCarData',
-                    type: 'GET',
-                    async: true,
-                    dataType: "json",
-                    data: {
-                        carId: '@Model'
-                    },
-                    success: function (data) {
-                        drawSpeedGraph(data);
-                    }
-                });
-            });
-
-            function drawSpeedGraph(recievedData) {
-                $('.chart-container').highcharts({
-                    chart: {
-                        type: 'line'
-                    },
-                    title: {
-                        text: 'Average Speed'
-                    },
-                    subtitle: {
-                        text: 'Car: ' + recievedData.CarNumber
-                    },
-                    xAxis: {
-                        categories: recievedData.TimeArray
-                    },
-                    yAxis: {
-                        title: {
-                            text: 'Speed (km/h)'
-                        }
-                    },
-                    plotOptions: {
-                        line: {
-                            dataLabels: {
-                                enabled: true
-                            },
-                            enableMouseTracking: false
-                        }
-                    },
-                    series: {
-                        name: recievedData.CarNumber,
-                        data: recievedData.SpeedArray
-                    }
-                });
+<div class="row">
+    <div class="col-md-6">
+        @Model.AverageFuelCompsuntionPerSelectedPeriod
+    </div>
+    <div class="col-md-6">
+        <h2>Current Car Problems</h2>
+        <ul>
+            @foreach (var code in @Model.UserCar.TroubleCodes)
+            {
+                <li> @code.DTCNumber - @code.Description</li>
             }
+        </ul>
+    </div>
+</div>
 
 
-    });
-    </script>*@
+<script>
+    jQuery('#dateFrom').datetimepicker();
+    jQuery('#dateTo').datetimepicker();
+
+    $(document).on('click', '#date-submit-button', function () {
+
+        var id = $("#car-id").val();
+        var dateFrom = $("#dateFrom").val();
+        var dateTo = $("#dateTo").val();
+
+        window.location.href = '/Cars/CarInfo?id=' + id + '&dateFrom=' + dateFrom + '&dateTo=' + dateTo;
+    })
+</script>

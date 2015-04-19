@@ -18,6 +18,7 @@ namespace BusinessLogic.Models
         public DbSet<UserOrder> UserOrders { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Car> Cars { get; set; }
+        public DbSet<TroubleCode> TroubleCodes { get; set; }
         
         public DbSet<TEntity> Set<TEntity>() where TEntity : class
         {

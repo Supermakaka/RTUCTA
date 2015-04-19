@@ -30,5 +30,6 @@ namespace BusinessLogic.Models
         public virtual DbSet<Car> Cars { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
+        public virtual DbSet<TroubleCode> TroubleCodes { get; set; }
     }
 }

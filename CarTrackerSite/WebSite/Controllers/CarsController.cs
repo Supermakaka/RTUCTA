@@ -111,13 +111,6 @@ namespace WebSite.Controllers
 
         public ActionResult CarInfo(int id, DateTime? dateFrom, DateTime? dateTo)
         {
-            Car car = carService.GetById(id);
-
-            IQueryable<Location> locations = (dateFrom.HasValue && dateTo.HasValue) ? locationService.GetMany(s => s.CarId == id && s.Time >= dateFrom && s.Time <= dateTo)
-                : locationService.GetMany(s => s.CarId == car.Id);
-
-            Highcharts model = ChartHelper.SpeedChart(car, locations);
-
             return View(CarInfoViewModelFactory(id, dateFrom, dateTo));
         }
 
@@ -137,6 +130,7 @@ namespace WebSite.Controllers
 
             CarInfoViewModel model = new CarInfoViewModel();
 
+            model.UserCar = car;
             model.SpeedChart = ChartHelper.SpeedChart(car, locations);
             model.AverageSpeedPerPeriod = ChartHelper.AverageSpeedPerSelectedPeriod(car, locations, "chart2");
             model.AverageSpeedPerAllTime = ChartHelper.AverageSpeedPerSelectedPeriod(car, AllLocations, "chart3");

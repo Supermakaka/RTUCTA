@@ -48,6 +48,11 @@
       <End EntitySet="Companies" Role="Company" />
       <End EntitySet="Users" Role="BaseUser" />
     </AssociationSet>
+    <EntitySet Name="TroubleCodes" EntityType="BusinessLogic.Models.TroubleCode" />
+    <AssociationSet Name="CarToFaultCodes" Association="BusinessLogic.Models.CarToFaultCodes">
+      <End Role="Car" EntitySet="Cars" />
+      <End Role="TroubleCode" EntitySet="TroubleCodes" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="User" BaseType="BusinessLogic.Models.BaseUser">
     <Property Name="Role" Type="BusinessLogic.Models.UserRoles" Nullable="false" />
@@ -86,6 +91,7 @@
     <Property Name="FuelTankCapacity" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="FuelConsumptionUrban" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="FuelConsumptionExtraUrban" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="TroubleCodes" Relationship="BusinessLogic.Models.CarToFaultCodes" FromRole="Car" ToRole="TroubleCode" />
   </EntityType>
   <EntityType Name="Location">
     <Key>
@@ -102,7 +108,6 @@
     <Property Name="Speed" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
     <Property Name="Mileage" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="FuelTank" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="IsTurnedOn" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="Throtle" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="FuelConsumption" Type="Decimal" Precision="18" Scale="2" />
   </EntityType>
@@ -149,5 +154,18 @@
         <PropertyRef Name="CompanyId" />
       </Dependent>
     </ReferentialConstraint>
+  </Association>
+  <EntityType Name="TroubleCode">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DTCNumber" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Cars" Relationship="BusinessLogic.Models.CarToFaultCodes" FromRole="TroubleCode" ToRole="Car" />
+  </EntityType>
+  <Association Name="CarToFaultCodes">
+    <End Type="BusinessLogic.Models.Car" Role="Car" Multiplicity="*" />
+    <End Type="BusinessLogic.Models.TroubleCode" Role="TroubleCode" Multiplicity="*" />
   </Association>
 </Schema>

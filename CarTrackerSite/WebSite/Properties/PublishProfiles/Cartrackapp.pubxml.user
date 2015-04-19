@@ -22,7 +22,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/10/2015 19:13:43</publishTime>
     </File>
     <File Include="bin/BusinessLogic.dll">
-      <publishTime>04/12/2015 19:43:49</publishTime>
+      <publishTime>04/18/2015 08:36:13</publishTime>
     </File>
     <File Include="bin/DataTables.Mvc.dll">
       <publishTime>04/10/2015 19:13:43</publishTime>
@@ -103,7 +103,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/10/2015 19:13:43</publishTime>
     </File>
     <File Include="bin/WebSite.dll">
-      <publishTime>04/12/2015 19:43:50</publishTime>
+      <publishTime>04/18/2015 11:00:53</publishTime>
     </File>
     <File Include="Content/animate/animate.css">
       <publishTime>04/10/2015 19:13:42</publishTime>
@@ -718,7 +718,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/22/2014 22:09:01</publishTime>
     </File>
     <File Include="Views/Cars/CarInfo.cshtml">
-      <publishTime>04/11/2015 22:08:35</publishTime>
+      <publishTime>04/17/2015 00:27:41</publishTime>
     </File>
     <File Include="Views/Cars/CarList.cshtml">
       <publishTime>04/10/2015 19:13:43</publishTime>

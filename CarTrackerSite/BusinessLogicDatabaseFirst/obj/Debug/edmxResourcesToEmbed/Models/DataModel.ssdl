@@ -14,6 +14,14 @@
     <Property Name="FuelConsumptionUrban" Type="decimal" Precision="18" Scale="2" />
     <Property Name="FuelConsumptionExtraUrban" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
+  <EntityType Name="CarToFaultCodes">
+    <Key>
+      <PropertyRef Name="CarID" />
+      <PropertyRef Name="TroubleCodeID" />
+    </Key>
+    <Property Name="CarID" Type="int" Nullable="false" />
+    <Property Name="TroubleCodeID" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Company">
     <Key>
       <PropertyRef Name="Id" />
@@ -35,9 +43,17 @@
     <Property Name="Speed" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="Mileage" Type="decimal" Precision="18" Scale="2" />
     <Property Name="FuelTank" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="IsTurnedOn" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="IsTurnedOn" Type="bit" />
     <Property Name="Throtle" Type="decimal" Precision="18" Scale="2" />
     <Property Name="FuelConsumption" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="TroubleCodes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DTCNumber" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -76,6 +92,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_CarToFaultCodes_Car">
+    <End Role="Car" Type="Self.Car" Multiplicity="1" />
+    <End Role="CarToFaultCodes" Type="Self.CarToFaultCodes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Car">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CarToFaultCodes">
+        <PropertyRef Name="CarID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CarToFaultCodes_TroubleCodes">
+    <End Role="TroubleCodes" Type="Self.TroubleCodes" Multiplicity="1" />
+    <End Role="CarToFaultCodes" Type="Self.CarToFaultCodes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TroubleCodes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CarToFaultCodes">
+        <PropertyRef Name="TroubleCodeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Location_Car">
     <End Role="Car" Type="Self.Car" Multiplicity="1" />
     <End Role="Location" Type="Self.Location" Multiplicity="*" />
@@ -102,13 +142,23 @@
   </Association>
   <EntityContainer Name="BusinessLogicModelsStoreContainer">
     <EntitySet Name="Car" EntityType="Self.Car" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CarToFaultCodes" EntityType="Self.CarToFaultCodes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TroubleCodes" EntityType="Self.TroubleCodes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserOrder" EntityType="Self.UserOrder" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Car_User" Association="Self.FK_Car_User">
       <End Role="User" EntitySet="User" />
       <End Role="Car" EntitySet="Car" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CarToFaultCodes_Car" Association="Self.FK_CarToFaultCodes_Car">
+      <End Role="Car" EntitySet="Car" />
+      <End Role="CarToFaultCodes" EntitySet="CarToFaultCodes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CarToFaultCodes_TroubleCodes" Association="Self.FK_CarToFaultCodes_TroubleCodes">
+      <End Role="TroubleCodes" EntitySet="TroubleCodes" />
+      <End Role="CarToFaultCodes" EntitySet="CarToFaultCodes" />
     </AssociationSet>
     <AssociationSet Name="FK_Location_Car" Association="Self.FK_Location_Car">
       <End Role="Car" EntitySet="Car" />

@@ -24,7 +24,6 @@ namespace BusinessLogic.Models
         public decimal Speed { get; set; }
         public Nullable<decimal> Mileage { get; set; }
         public Nullable<decimal> FuelTank { get; set; }
-        public Nullable<decimal> IsTurnedOn { get; set; }
         public Nullable<decimal> Throtle { get; set; }
         public Nullable<decimal> FuelConsumption { get; set; }
     
