@@ -5,20 +5,16 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="7b5be67e98294f6a87568f0530a802a5" Name="Diagram1">
-        <EntityTypeShape EntityType="BusinessLogic.Models.BaseUser" PointX="3.25" PointY="1.25" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessLogic.Models.UserOrder" Width="1.5" PointX="5.375" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessLogic.Models.User" Width="1.5" PointX="2.25" PointY="4.375" />
+        <EntityTypeShape EntityType="BusinessLogic.Models.BaseUser" PointX="3.25" PointY="1.25" Width="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessLogic.Models.User" Width="2" PointX="3.25" PointY="4.75" />
         <InheritanceConnector EntityType="BusinessLogic.Models.User" />
-        <EntityTypeShape EntityType="BusinessLogic.Models.Admin" Width="1.5" PointX="0.625" PointY="3.25" />
+        <EntityTypeShape EntityType="BusinessLogic.Models.Admin" Width="2" PointX="0.625" PointY="2.25" />
         <InheritanceConnector EntityType="BusinessLogic.Models.Admin" />
-        <AssociationConnector Association="BusinessLogic.Models.UserUserOrder" />
-        <EntityTypeShape EntityType="BusinessLogic.Models.Car" Width="1.5" PointX="5.75" PointY="0.875" />
-        <EntityTypeShape EntityType="BusinessLogic.Models.Location" Width="1.5" PointX="8" PointY="3.25" />
+        <EntityTypeShape EntityType="BusinessLogic.Models.Car" Width="2" PointX="5.75" PointY="0.875" />
+        <EntityTypeShape EntityType="BusinessLogic.Models.Location" Width="2" PointX="8.375" PointY="3.25" />
         <AssociationConnector Association="BusinessLogic.Models.FK_Car_User" />
         <AssociationConnector Association="BusinessLogic.Models.FK_Location_Car" />
-        <EntityTypeShape EntityType="BusinessLogic.Models.Company" Width="1.5" PointX="0.875" PointY="1.125" />
-        <AssociationConnector Association="BusinessLogic.Models.FK_User_Company" />
-        <EntityTypeShape EntityType="BusinessLogic.Models.TroubleCode" Width="1.5" PointX="8" PointY="0.75" />
+        <EntityTypeShape EntityType="BusinessLogic.Models.TroubleCode" Width="2" PointX="8.375" PointY="0.75" />
         <AssociationConnector Association="BusinessLogic.Models.CarToFaultCodes" />
         </Diagram>
     </edmx:Diagrams>
