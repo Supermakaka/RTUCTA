@@ -26,8 +26,8 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="Name" Nullable="false" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Location">
     <Key>
@@ -129,8 +129,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_User_Company">
-    <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
-    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <End Type="Self.Company" Multiplicity="0..1" Role="Company" />
+    <End Type="Self.User" Multiplicity="*" Role="User" />
     <ReferentialConstraint>
       <Principal Role="Company">
         <PropertyRef Name="Id" />
@@ -165,8 +165,8 @@
       <End Role="Location" EntitySet="Location" />
     </AssociationSet>
     <AssociationSet Name="FK_User_Company" Association="Self.FK_User_Company">
-      <End Role="Company" EntitySet="Company" />
-      <End Role="User" EntitySet="User" />
+      <End EntitySet="Company" Role="Company" />
+      <End EntitySet="User" Role="User" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

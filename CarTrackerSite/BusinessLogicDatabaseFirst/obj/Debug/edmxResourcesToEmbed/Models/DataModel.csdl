@@ -19,10 +19,10 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Price" Type="Int32" Nullable="false" />
-    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+    <Property Name="Name" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+    <Property Name="Price" Nullable="false" Type="Int32" />
+    <Property Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
     <Property Name="UserId" Nullable="false" Type="Int32" />
     <NavigationProperty Name="User" Relationship="BusinessLogic.Models.UserUserOrder" FromRole="UserOrder" ToRole="User" />
   </EntityType>
@@ -30,8 +30,8 @@
     <EntitySet Name="Users" EntityType="BusinessLogic.Models.BaseUser" />
     <EntitySet Name="UserOrders" EntityType="Self.UserOrder" />
     <AssociationSet Name="UserUserOrder" Association="BusinessLogic.Models.UserUserOrder">
-      <End Role="User" EntitySet="Users" />
-      <End Role="UserOrder" EntitySet="UserOrders" />
+      <End EntitySet="Users" Role="User" />
+      <End EntitySet="UserOrders" Role="UserOrder" />
     </AssociationSet>
     <EntitySet Name="Cars" EntityType="BusinessLogic.Models.Car" />
     <EntitySet Name="Locations" EntityType="BusinessLogic.Models.Location" />
@@ -65,8 +65,8 @@
     <Member Name="Supervisor" Value="3" />
   </EnumType>
   <Association Name="UserUserOrder">
-    <End Type="BusinessLogic.Models.User" Role="User" Multiplicity="1" />
-    <End Type="BusinessLogic.Models.UserOrder" Role="UserOrder" Multiplicity="*" />
+    <End Type="BusinessLogic.Models.User" Multiplicity="1" Role="User" />
+    <End Type="BusinessLogic.Models.UserOrder" Multiplicity="*" Role="UserOrder" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="Id" />
@@ -90,7 +90,7 @@
     <Property Name="VINNumber" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="FuelTankCapacity" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="FuelConsumptionUrban" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="FuelConsumptionExtraUrban" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="FuelConsumptionExtraUrban" Precision="18" Scale="2" Type="Decimal" />
     <NavigationProperty Name="TroubleCodes" Relationship="BusinessLogic.Models.CarToFaultCodes" FromRole="Car" ToRole="TroubleCode" />
   </EntityType>
   <EntityType Name="Location">
@@ -139,8 +139,8 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+    <Property Name="Name" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
     <NavigationProperty Name="Users" Relationship="BusinessLogic.Models.FK_User_Company" FromRole="Company" ToRole="BaseUser" />
   </EntityType>
   <Association Name="FK_User_Company">
