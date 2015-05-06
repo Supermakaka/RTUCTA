@@ -27,7 +27,7 @@ namespace WebSite.Controllers
         }
 
         public ActionResult CarList()
-        {   
+        {
             return View();
         }
 
@@ -71,33 +71,33 @@ namespace WebSite.Controllers
 
         [HttpPost]
         public ActionResult Create(CarViewModel model)
-        {   
-            if(!ModelState.IsValid)
+        {
+            if (!ModelState.IsValid)
                 return PartialView("/Views/Cars/PartialViews/Modals/Create.cshtml", model);
 
             carService.Add(Mapper.Map<CarViewModel, Car>(model));
 
-            return Json(new { success = true} );
+            return Json(new { success = true });
         }
 
         public ActionResult Edit(int id)
         {
             return PartialView("/Views/Cars/PartialViews/Modals/Edit.cshtml", Mapper.Map<Car, CarViewModel>(carService.GetById(id)));
         }
-        
+
         [HttpPost]
         public ActionResult Edit(CarViewModel model)
         {
             Car car = carService.GetById(model.Id.Value);
-            
+
             carService.Update(Mapper.Map<CarViewModel, Car>(model, car));
 
             return Json(new { success = true });
         }
 
         public ActionResult Delete(int id)
-        {   
-            return PartialView("/Views/Shared/PartialViews/Modals/Delete.cshtml", Mapper.Map<Car, DeleteApproveViewModel >(carService.GetById(id)));
+        {
+            return PartialView("/Views/Shared/PartialViews/Modals/Delete.cshtml", Mapper.Map<Car, DeleteApproveViewModel>(carService.GetById(id)));
         }
 
         public ActionResult DeleteById(int id)
@@ -138,6 +138,7 @@ namespace WebSite.Controllers
             model.AverageFuelCompsuntionPerSelectedPeriod = ChartHelper.AverageFuelConsumption(car, locations, "chart5");
             model.ThrotleChart = ChartHelper.ThrotleChart(car, locations);
             model.MillageChart = ChartHelper.MillageChart(car, locations);
+            model.FuelChart = ChartHelper.FuelChart(car, locations);
 
             return model;
         }

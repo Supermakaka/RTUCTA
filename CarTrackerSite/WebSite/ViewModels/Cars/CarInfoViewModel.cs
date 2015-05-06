@@ -21,5 +21,6 @@ namespace WebSite.ViewModels.Cars
         public Highcharts ThrotleChart { get; set; }
         public Highcharts MillageChart { get; set; }
         public Highcharts DrivenKilometersPerPeriodChart { get; set; }
+        public Highcharts FuelChart { get; set; }
     }
 }

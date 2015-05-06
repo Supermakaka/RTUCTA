@@ -56,6 +56,27 @@ namespace WebSite.Core.Helpers
             return chart;
         }
 
+        public static Highcharts FuelChart(Car car, IQueryable<Location> locations)
+        {
+            List<ChartDecimalDateClass> data = locations.Select(s => new ChartDecimalDateClass { ExecutionDate = s.Time, ExecutionValue = s.FuelTank.Value / 100 * car.FuelTankCapacity.Value }).ToList();
+            object[,] chartData = new object[data.Count, 2];
+            int i = 0;
+            foreach (ChartDecimalDateClass item in data)
+            {
+                chartData.SetValue(item.ExecutionDate, i, 0);
+                chartData.SetValue(item.ExecutionValue, i, 1);
+                i++;
+            }
+
+            Highcharts chart = new Highcharts("fuelTankChart")
+                .InitChart(new Chart { Type = ChartTypes.Line })
+                .SetTitle(new Title { Text = "Fuel Tank Chart(max = " + car.FuelTankCapacity + " l)" })
+                .SetXAxis(new XAxis { Type = AxisTypes.Datetime })
+                .SetSeries(new Series { Data = new Data(chartData) });
+
+            return chart;
+        }
+
         public static Highcharts MillageChart(Car car, IQueryable<Location> locations)
         {
             List<ChartDecimalDateClass> data = locations.Select(s => new ChartDecimalDateClass { ExecutionDate = s.Time, ExecutionValue = s.Mileage.Value }).ToList();
