@@ -4,9 +4,12 @@
     ViewBag.Title = "CarInfo";
 }
 <div class="chart-container">
-@Html.HiddenFor(m => m.ID, new { @id = "car-id"})
+    @Html.HiddenFor(m => m.ID, new { @id = "car-id" })
 </div>
-<h2>CarInfo</h2>
+
+<br/>
+
+<h2>@Model.UserCar.CarNumber Information</h2>
 <div class="row">
     <div class="row">
         <div class="col-md-4">
@@ -32,58 +35,83 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-12">
-        @Model.SpeedChart
+<br />
+
+<br />
+<br />
+
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#sectionA">Speed Chart</a></li>
+    <li><a data-toggle="tab" href="#sectionB">Millage Chart</a></li>
+    <li><a data-toggle="tab" href="#sectionD">Throttle Chart</a></li>
+    <li><a data-toggle="tab" href="#sectionE">Fuel Tank Chart</a></li>
+    <li><a data-toggle="tab" href="#sectionF">Average Speed</a></li>
+    <li><a data-toggle="tab" href="#sectionG">Average Fuel Consumption</a></li>
+    <li><a data-toggle="tab" href="#sectionH">Trouble Codes</a></li>
+</ul>
+<div class="tab-content">
+    <div id="sectionA" class="tab-pane fade in active">
+        <div class="row">
+            <div class="col-md-12">
+                @Model.SpeedChart
+            </div>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        @Model.MillageChart
+    <div id="sectionB" class="tab-pane fade">
+        <div class="row">
+            <div class="col-md-12">
+                @Model.MillageChart
+            </div>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        @Model.ThrotleChart
+    <div id="sectionD" class="tab-pane fade">
+        <div class="row">
+            <div class="col-md-12">
+                @Model.ThrotleChart
+            </div>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        @Model.FuelChart
+    <div id="sectionE" class="tab-pane fade">
+        <div class="row">
+            <div class="col-md-12">
+                @Model.FuelChart
+            </div>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
-        @Model.AverageSpeedPerPeriod
+    <div id="sectionF" class="tab-pane fade">
+        <div class="row">
+            <div class="col-md-6">
+                @Model.AverageSpeedPerPeriod
+            </div>
+            <div class="col-md-6">
+                @Model.AverageSpeedPerAllTime
+            </div>
+        </div>
     </div>
-    <div class="col-md-6">
-        @Model.AverageSpeedPerAllTime
+    <div id="sectionG" class="tab-pane fade">
+        <div class="row">
+            <div class="col-md-6">
+                @Model.AverageFuelCompsuntionPerSelectedPeriod
+            </div>
+            <div class="col-md-6">
+                @Model.AverageFuelCompsuntionPerAllTime
+            </div>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
-        @Model.AverageFuelCompsuntionPerSelectedPeriod
-    </div>
-    <div class="col-md-6">
-        @Model.AverageFuelCompsuntionPerAllTime
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
-        @Model.AverageFuelCompsuntionPerSelectedPeriod
-    </div>
-    <div class="col-md-6">
-        <h2>Current Car Problems</h2>
-        <ul>
-            @foreach (var code in @Model.UserCar.TroubleCodes)
+    <div id="sectionH" class="tab-pane fade">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Current Car Errors</h2>
+                <ul>
+                    @foreach (var code in @Model.UserCar.TroubleCodes)
             {
-                <li> @code.DTCNumber - @code.Description</li>
-            }
-        </ul>
+                        <li> @code.DTCNumber - @code.Description</li>
+                    }
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
-
-
 <script>
     jQuery('#dateFrom').datetimepicker();
     jQuery('#dateTo').datetimepicker();
